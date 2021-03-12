@@ -20,8 +20,22 @@ $sql = "SELECT * FROM prenotazioni";
 
 $stmt = $pdo->query($sql);
 
-$result = $stmt->fetchAll();
+$table= ' <table>
+    <tr>
+      <th>CODICE FISCALE</th>
+      <th>GIORNO</th>
+    </tr>';
 
-echo "<pre>";
-var_dump($result);
-echo "</pre>";
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+
+    $table .= "
+    <tr>
+        <td>$row[codice_fiscale]</td>
+        <td>$row[giorno]</td>
+    </tr>
+    ";
+}
+
+$table .= '</table>';
+
+echo $table;
