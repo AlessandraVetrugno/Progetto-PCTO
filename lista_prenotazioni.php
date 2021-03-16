@@ -1,28 +1,33 @@
 <?php
 
+require 'vendor/autoload.php';
 include_once "config.php";
 
 // query di inserimento preparata
 $sql = "SELECT * FROM prenotazioni";
 
+use League\Plates\Engine;
+
+// viene creato l'oggetto per la gestione dei template
+$templates = new Engine('./view', 'tpl');
+
 $stmt = $pdo->query($sql);
 
-$table= ' <table>
-    <tr>
-      <th>CODICE FISCALE</th>
-      <th>GIORNO</th>
-    </tr>';
+// estraggo le righe di risposta che finiranno come vettori
+$result = $stmt->fetchAll();
 
-while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+$mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
 
-    $table .= "
-    <tr>
-        <td>$row[codice_fiscale]</td>
-        <td>$row[giorno]</td>
-    </tr>
-    ";
+function convertiData($row) {
+    GLOBAL $mesi;
+    $giorno = date("d", strtotime($row['giorno']));
+    $mese = date("m", strtotime($row['giorno']));
+    $anno = date("Y", strtotime($row['giorno']));
+    $row['giorno'] = $giorno.' '.$mesi[(int) $mese].' '.$anno;
+    return $row;
 }
 
-$table .= '</table>';
+$result = array_map('convertiData', $result);
 
-echo $table;
+// rendo un template che mi visualizza le tabelle
+echo $templates->render('lista_prenotazioni', ['result' => $result]);
