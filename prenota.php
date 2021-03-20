@@ -6,21 +6,31 @@ include_once "config.php";
 $codice_fiscale = $_POST['codice_fiscale'];
 $giorno = $_POST['giorno'];
 $codice = strtoupper(uniqid());
+$headerMessage = "Prenotazione fallita";
+$firstLine = "Sono state effettuate troppe prenotazioni per questa giornata, scegli un altro giorno";
 
 // query di inserimento preparata
 $sql = "INSERT INTO prenotazioni VALUES (NULL, :codice_fiscale, :giorno, :codice)";
 
-// inviamo la query al database che la tiene pronta
-$stmt = $pdo->prepare($sql);
+$sql_numero= "SELECT COUNT(*) AS n_prenotazioni FROM prenotazioni WHERE prenotazioni.giorno = '$giorno'";
 
-// inviamo i dati concreti che verranno messi al posto dei segnaposto
-$stmt->execute(
-    [
-        'codice_fiscale' => $codice_fiscale,
-        'giorno' => $giorno,
-        'codice' => $codice
-    ]
-);
+$n_prenotazioni = $pdo->query($sql_numero)->fetchAll()[0]["n_prenotazioni"];
+
+if ($n_prenotazioni <= 5) {
+    $headerMessage = "Prenotazione avvenuta con successo";
+    // inviamo la query al database che la tiene pronta
+    $stmt = $pdo->prepare($sql);
+
+    // inviamo i dati concreti che verranno messi al posto dei segnaposto
+    $stmt->execute(
+        [
+            'codice_fiscale' => $codice_fiscale,
+            'giorno' => $giorno,
+            'codice' => $codice
+        ]
+    );
+    $firstLine = "Il codice della tua prenotazione è il seguente: $codice";
+}
 
 ?>
 
@@ -30,7 +40,7 @@ $stmt->execute(
     <title>Prenotazione</title>
 </head>
 <body>
-    <h1>Prenotazione avvenuta con successo</h1>
-    <p>Il codice della tua prenotazione è il seguente: <?php echo $codice; ?></p>
+<h1><?php echo $headerMessage ?></h1>
+<p><?php echo $firstLine ?></p>
 </body>
 </html>
