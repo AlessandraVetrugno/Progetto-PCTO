@@ -6,7 +6,7 @@ include_once "config.php";
 $codice_fiscale = $_POST['codice_fiscale'];
 $giorno = $_POST['giorno'];
 $codice = strtoupper(uniqid());
-$headerMessage = "Prenotazione fallita";
+$headerMsg = array('class'=>'error', 'message'=>'Prenotazione fallita');
 $firstLine = "Sono state effettuate troppe prenotazioni per questa giornata, scegli un altro giorno";
 
 // query di inserimento preparata
@@ -17,7 +17,8 @@ $sql_numero= "SELECT COUNT(*) AS n_prenotazioni FROM prenotazioni WHERE prenotaz
 $n_prenotazioni = $pdo->query($sql_numero)->fetchAll()[0]["n_prenotazioni"];
 
 if ($n_prenotazioni <= 5) {
-    $headerMessage = "Prenotazione avvenuta con successo";
+    $headerMsg['class'] = 'success';
+    $headerMsg['message'] = 'Prenotazione avvenuta con successo';
     // inviamo la query al database che la tiene pronta
     $stmt = $pdo->prepare($sql);
 
@@ -38,9 +39,12 @@ if ($n_prenotazioni <= 5) {
 <html>
 <head>
     <title>Prenotazione</title>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-<h1><?php echo $headerMessage ?></h1>
-<p><?php echo $firstLine ?></p>
+    <div class="content">
+        <h1 class="<?php echo $headerMsg['class'] ?>"><?php echo $headerMsg['message'] ?></h1>
+        <p><?php echo $firstLine ?></p>
+    </div>
 </body>
 </html>
