@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prenotazioni</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
+</head>
+<body>
+    <h1>Portale prenotazioni</h1>
+    <form action="riepilogo_prenotazioni.php" method="POST">
+        <fieldset>
+            <legend>Visualizza il numero di prenotazioni in un intervallo di tempo</legend>
+            <label for="giorno1">Codice</label>
+            <input type="date" id="giorno1" placeholder="Giorno scelto" name="giorno1">
+            <label for="giorno2">Giorno</label>
+            <input type="date" id="giorno2" placeholder="Giorno scelto" name="giorno2">
+            <input type="submit" value="Invia la tua richiesta">
+        </fieldset>
+    </form>
+</body>
+</html>
