@@ -23,22 +23,6 @@ $stmt = $pdo->query($sql);
 // estraggo le righe di risposta che finiranno come vettori
 $result = $stmt->fetchAll();
 
-$mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
-
-function convertiData($data) {
-    GLOBAL $mesi;
-    $giorno = date("d", strtotime($data));
-    $mese = date("m", strtotime($data));
-    $anno = date("Y", strtotime($data));
-    return $giorno.' '.$mesi[(int) $mese].' '.$anno;
-
-}
-
-function convertiDataMappa($row) {
-    $row['giorno'] = convertiData($row['giorno']);
-    return $row;
-}
-
 $result = array_map('convertiDataMappa', $result);
 $intervallo = ['inizio' => convertiData($giorno1), 'fine' => convertiData($giorno2)];
 

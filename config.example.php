@@ -18,3 +18,20 @@ $charset = 'utf8';
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
 $pdo = new PDO($dsn, $user, $pass);
+
+// funzioni usate frequentemente (si potrebbero anche mettere in un file 'scripts' ed includerlo
+$mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
+
+function convertiData($data) {
+    GLOBAL $mesi;
+    $giorno = date("d", strtotime($data));
+    $mese = date("m", strtotime($data));
+    $anno = date("Y", strtotime($data));
+    return $giorno.' '.$mesi[(int) $mese - 1].' '.$anno;
+
+}
+
+function convertiDataMappa($row) {
+    $row['giorno'] = convertiData($row['giorno']);
+    return $row;
+}

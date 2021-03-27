@@ -16,18 +16,7 @@ $stmt = $pdo->query($sql);
 // estraggo le righe di risposta che finiranno come vettori
 $result = $stmt->fetchAll();
 
-$mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
-
-function convertiData($row) {
-    GLOBAL $mesi;
-    $giorno = date("d", strtotime($row['giorno']));
-    $mese = date("m", strtotime($row['giorno']));
-    $anno = date("Y", strtotime($row['giorno']));
-    $row['giorno'] = $giorno.' '.$mesi[(int) $mese].' '.$anno;
-    return $row;
-}
-
-$result = array_map('convertiData', $result);
+$result = array_map('convertiDataMappa', $result);
 $today = convertiData(['giorno' => date('d-m-Y')])['giorno'];
 
 // rendo un template che mi visualizza le tabelle
