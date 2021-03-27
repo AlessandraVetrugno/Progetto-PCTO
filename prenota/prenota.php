@@ -1,7 +1,7 @@
 <?php
 
-require 'phpqrcode/qrlib.php';
-include_once "config.php";
+require '../phpqrcode/qrlib.php';
+include_once "../config.php";
 
 // variabili valorizzate tramite POST
 $codice_fiscale = $_POST['codice_fiscale'];
@@ -15,9 +15,9 @@ $sql = "INSERT INTO prenotazioni VALUES (NULL, :codice_fiscale, :giorno, :codice
 
 $sql_numero= "SELECT COUNT(*) AS n_prenotazioni FROM prenotazioni WHERE prenotazioni.giorno = '$giorno'";
 
-$n_prenotazioni = $pdo->query($sql_numero)->fetchAll()[0]["n_prenotazioni"];
+$n_prenotazioni = $pdo->query($sql_numero)->fetch()["n_prenotazioni"];
 
-if ($n_prenotazioni <= 5) {
+if ($n_prenotazioni < 5) {
     $headerMsg['class'] = 'success';
     $headerMsg['message'] = 'Prenotazione avvenuta con successo';
     // inviamo la query al database che la tiene pronta
@@ -32,7 +32,7 @@ if ($n_prenotazioni <= 5) {
         ]
     );
     // $firstLine = "Il codice della tua prenotazione è il seguente: $codice";
-    $firstLine = "QR Code contenente il codice della tua prenotazione:";
+    $firstLine = "Codice della prenotazione: $codice<br />QR Code: ";
     $QRCode = QRCodeGenerator($codice);
 }
 
@@ -63,7 +63,7 @@ function QRCodeGeneratorSimple($data) {
 <html>
 <head>
     <title>Prenotazione</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
 <div class="content">
