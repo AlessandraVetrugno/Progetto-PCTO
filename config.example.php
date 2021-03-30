@@ -5,7 +5,7 @@
 // adattandole alla propria configurazione
 
 // dice a livello dello script che gli errori verranno mostrati e che non verranno loggati
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 
 $host = 'your_host';
@@ -18,6 +18,7 @@ $charset = 'utf8';
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
 $pdo = new PDO($dsn, $user, $pass);
+$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // funzioni usate frequentemente (si potrebbero anche mettere in un file 'scripts' ed includerlo
 $mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];

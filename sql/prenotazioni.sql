@@ -19,7 +19,6 @@
 -- Table structure for table `prenotazioni`
 --
 
-DROP TABLE IF EXISTS `prenotazioni`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `prenotazioni` (
@@ -27,8 +26,8 @@ CREATE TABLE `prenotazioni` (
   `codice_fiscale` varchar(16) NOT NULL,
   `giorno` date NOT NULL,
   `codice` varchar(100) NOT NULL,
+  `eseguito` tinyint(1) DEFAULT 0,
+  `note` text DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
--- Dump completed on 2021-03-13 11:33:56
