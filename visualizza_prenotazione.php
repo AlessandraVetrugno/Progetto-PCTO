@@ -1,6 +1,12 @@
 <?php
 
+require 'vendor/autoload.php';
 include_once "config.php";
+
+use League\Plates\Engine;
+
+// viene creato l'oggetto per la gestione dei template
+$templates = new Engine('./view', 'tpl');
 
 // variabili valorizzate tramite POST
 $codice_fiscale = $_POST['codice_fiscale'];
@@ -12,24 +18,9 @@ $sql = "SELECT * FROM prenotazioni
 
 $stmt = $pdo->query($sql);
 
-$table= ' <table>
-    <tr>
-      <th>CODICE PRENOTAZIONE</th>
-      <th>CODICE FISCALE</th>
-      <th>GIORNO</th>
-    </tr>';
-
 $prenotazione = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 
-// aggiungo i dati alla tabella
-$table .= "
-<tr>
-    <td>$prenotazione[codice]</td>
-    <td>$prenotazione[codice_fiscale]</td>
-    <td>$prenotazione[giorno]</td>
-</tr>
-";
+$prenotazione['giorno'] = convertiData($prenotazione['giorno']);
 
-$table .= '</table>';
-
-echo $table;
+// rendo un template che mi visualizza le tabelle
+echo $templates->render('visualizza_prenotazione', ['result' => $prenotazione]);
