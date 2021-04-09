@@ -28,6 +28,7 @@ CREATE TABLE `prenotazioni` (
   `codice` varchar(100) NOT NULL,
   `eseguito` tinyint(1) DEFAULT 0,
   `note` text DEFAULT NULL,
+  `annullato` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
