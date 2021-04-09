@@ -18,6 +18,7 @@ $charset = 'utf8';
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 
 $pdo = new PDO($dsn, $user, $pass);
+// trasforma tutti gli errori SQL in eccezioni PHP
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
 // funzioni usate frequentemente (si potrebbero anche mettere in un file 'scripts' ed includerlo
