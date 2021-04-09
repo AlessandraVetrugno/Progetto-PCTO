@@ -1,0 +1,18 @@
+body {
+    padding: 25px;
+}
+
+form {
+    margin-bottom: 25px;
+}
+
+h1 {
+    color: cornflowerblue;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.visualizza-prenotazione > table > tbody {
+    max-width: 400px;
+    text-align: end;
+}

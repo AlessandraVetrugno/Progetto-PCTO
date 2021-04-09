@@ -10,6 +10,7 @@ $giorno2 = $_POST['giorno2'];
 $sql = "SELECT prenotazioni.giorno, COUNT(*) AS n_prenotazioni
         FROM prenotazioni 
         WHERE prenotazioni.giorno BETWEEN '$giorno1' AND '$giorno2'
+        AND prenotazioni.annullato = false
         GROUP BY prenotazioni.giorno
         ORDER BY prenotazioni.giorno DESC";
 

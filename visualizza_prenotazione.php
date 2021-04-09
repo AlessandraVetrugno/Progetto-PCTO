@@ -22,5 +22,15 @@ $prenotazione = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 
 $prenotazione['giorno'] = convertiData($prenotazione['giorno']);
 
+$annullaPrenotazione = function () {
+    GLOBAL $codice_fiscale;
+    echo "ciao";
+    GLOBAL $pdo;
+    $sql = "UPDATE prenotazioni 
+            SET prenotazioni.annullato = true
+            WHERE prenotazioni.codice = '$codice_fiscale'";
+    $pdo->query($sql);
+};
+
 // rendo un template che mi visualizza le tabelle
 echo $templates->render('visualizza_prenotazione', ['result' => $prenotazione]);
