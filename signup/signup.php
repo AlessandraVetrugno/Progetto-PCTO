@@ -6,6 +6,7 @@ include_once "../config.php";
 $username = $_POST['username'];
 $password = $_POST['password'];
 $psw_hashed = password_hash($password, PASSWORD_DEFAULT);
+// password_verify($password, $psw_hashed)
 
 // query di inserimento preparata
 $sql = "INSERT INTO utenti VALUES (NULL, '$username', '$psw_hashed')";
@@ -21,6 +22,7 @@ $pdo->query($sql);
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
+<h1>Pagina operatore temp</h1>
 registrazione avvenuta con successo
 </div>
 </body>

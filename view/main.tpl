@@ -7,7 +7,8 @@
     <!-- mini.css framework -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
     <!-- Scritti da me -->
-    <link rel="stylesheet" href="assets/styles/main.css">
+    <link rel="stylesheet"
+          href=<?php if (!isset($rootPathRef)) $rootPathRef = ""; echo $rootPathRef."assets/styles/main.css"; ?> >
 </head>
 <body>
 <h1><?= $argomento ?></h1>
