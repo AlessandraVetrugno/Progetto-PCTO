@@ -1,5 +1,11 @@
 <?php
+require '../vendor/autoload.php';
 include_once "../config.php";
+
+use League\Plates\Engine;
+
+//Viene creato l'oggetto per la gestione dei template
+$templates = new Engine('../view','tpl');
 
 // date prenotate
 $sql= "
@@ -27,46 +33,11 @@ function datesPrenotable($dates, $step = '+1 day', $format = 'Y-m-d') {
     return $dates_permitted;
 }
 
-$dates_prenotable = datesPrenotable($dates);
-?>
+$dates_prenotable = [];
 
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <title>Prenotazioni</title>
+foreach (datesPrenotable($dates) as $date){
+    $date['giorno_testo'] = convertiData($date['giorno']);
+    $dates_prenotable[] = $date;
+}
 
-    <!-- mini.css framework -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mini.css/3.0.1/mini-default.min.css">
-    <!-- Scritti da me -->
-    <link rel="stylesheet" href="../assets/styles/main.css">
-</head>
-<body>
-<h1>Portale prenotazioni</h1>
-<form action="prenota.php" method="POST">
-    <fieldset>
-        <legend>Inserisci la prenotazione</legend>
-        <label>Codice</label>
-        <input type="text" placeholder="Codice fiscale" name="codice_fiscale">
-        <label>Giorno</label>
-        <select name="giorno" placeholder="Giorno scelto">
-            <?php foreach($dates_prenotable as $date): ?>
-                <option value=<?= $date['giorno'] ?>><?= convertiData($date['giorno']) ?></option>
-            <?php endforeach ?>
-        </select>
-        <input type="submit" value="Invia la tua richiesta">
-    </fieldset>
-</form>
-
-<form action="../visualizza_prenotazione.php" method="POST">
-    <fieldset>
-        <legend>Visualizza una prenotazione</legend>
-        <label>Codice fiscale</label>
-        <input type="text" placeholder="Codice fiscale" name="codice_fiscale">
-        <label>Codice prenotazione</label>
-        <input type="text" placeholder="Codice prenotazione" name="codice_prenotazione">
-        <input type="submit" value="Visualizza la tua prenotazione">
-    </fieldset>
-</form>
-</body>
-</html>
+echo $templates->render('prenota', ['dates' => $dates_prenotable]);

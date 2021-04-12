@@ -1,9 +1,12 @@
-<?php $this->layout('main',['argomento' => 'Tampone eseguito']); ?>
+<?php $this->layout('main',['argomento' => 'Esegui un tampone']); ?>
 
-<p>
-    Il tampone associato al codice <mark><?=$codice?></mark> è stato
-    eseguito.
-</p>
-<p>
-    Note: <?= $note ?>
-</p>
+<form action="../esegui/esegui.php" method="post">
+    <fieldset>
+        <legend>Inserisci le informazioni relative al tampone</legend>
+        <label for="codice">Codice univoco</label>
+        <input type="text" id="codice" placeholder="Codice univoco" name="codice">
+        <label for="note">Note</label>
+        <textarea id="note" placeholder="Note" name="note"></textarea>
+        <input type="submit" value="Registra il tampone">
+    </fieldset>
+</form>

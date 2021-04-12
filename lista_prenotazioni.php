@@ -3,13 +3,15 @@
 require 'vendor/autoload.php';
 include_once "config.php";
 
-// query di inserimento preparata
-$sql = "SELECT * FROM prenotazioni";
-
 use League\Plates\Engine;
 
 // viene creato l'oggetto per la gestione dei template
 $templates = new Engine('./view', 'tpl');
+
+// query di inserimento preparata
+$sql = "SELECT * 
+        FROM prenotazioni
+        ORDER BY giorno DESC";
 
 $stmt = $pdo->query($sql);
 

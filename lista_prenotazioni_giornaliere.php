@@ -17,7 +17,7 @@ $stmt = $pdo->query($sql);
 $result = $stmt->fetchAll();
 
 $result = array_map('convertiDataMappa', $result);
-$today = convertiData(['giorno' => date('d-m-Y')])['giorno'];
+$today = convertiData(date('d-m-Y'));
 
 // rendo un template che mi visualizza le tabelle
 echo $templates->render('lista_prenotazioni_giornaliere', ['result' => $result, 'today' => $today]);
