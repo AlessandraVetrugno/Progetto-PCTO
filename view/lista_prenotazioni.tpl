@@ -1,5 +1,6 @@
 <?php $this->layout('main', ['argomento' => 'Lista delle prenotazioni']) ?>
 
+<h2>Ciao <?= $username ?></h2>
 <table class="hoverable striped">
     <thead>
         <tr>

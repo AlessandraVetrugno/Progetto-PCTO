@@ -20,5 +20,17 @@ $result = $stmt->fetchAll();
 
 $result = array_map('convertiDataMappa', $result);
 
-// rendo un template che mi visualizza le tabelle
-echo $templates->render('lista_prenotazioni', ['result' => $result]);
+// se sei una persona che ha fatto il login
+if(isset($_SESSION['username'])){
+    $username = $_SESSION['username'];
+
+    // rendo un template che mi visualizza le tabelle
+    echo $templates->render('lista_prenotazioni',
+        [
+            'result' => $result,
+            'username' => $username
+        ]);
+}
+else {
+    echo $templates->render('utente_non_autorizzato');
+}

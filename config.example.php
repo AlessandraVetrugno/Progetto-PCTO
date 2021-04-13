@@ -21,6 +21,8 @@ $pdo = new PDO($dsn, $user, $pass);
 // trasforma tutti gli errori SQL in eccezioni PHP
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+session_start();
+
 // funzioni usate frequentemente (si potrebbero anche mettere in un file 'scripts' ed includerlo
 $mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
 
