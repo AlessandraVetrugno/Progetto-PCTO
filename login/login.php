@@ -27,6 +27,7 @@ else {
 
     // la password è corretta
     if (password_verify($password, $pass_hash)) {
+        $_SESSION['username'] = $username;
         echo $templates->render('login_effettuato', ['username' => $username]);
     }
     //la password è sbagliata
