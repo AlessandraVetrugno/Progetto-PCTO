@@ -30,3 +30,6 @@ Partendo da questo spunto, verrà qui sviluppata un'applicazione che risolva que
     - voglio poter visualizzare l'esito del mio tampone;
     - voglio poter annullare una prenotazione;
     - voglio poter essere avvisato dell'avvicinarsi della data dell'appuntamento.
+  
+## Diagramma Entità/Relazioni
+![Diagramma ER](./assets/images/ER.png "Diagramma ER")
