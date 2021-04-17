@@ -11,8 +11,13 @@
           href=<?php if (!isset($rootPathRef)) $rootPathRef = ""; echo $rootPathRef."assets/styles/main.css"; ?> >
 </head>
 <body>
-<h1 class="titolo"><?= $argomento ?></h1>
-<?= $this->section('content') ?>
+    <header>
+        <?php if(isset($_SESSION['username'])): ?>
+            Ciao <?= $_SESSION['username'] ?> - <a href="../logout/logout.php"> Logout </a>
+        <?php endif; ?>
+    </header>
+    <h1 class="titolo"><?= $argomento ?></h1>
+    <?= $this->section('content') ?>
 
 </body>
 </html>
