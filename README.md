@@ -9,7 +9,7 @@ Partendo da questo spunto, verrà qui sviluppata un'applicazione che risolva que
 - Operatore sanitario;
 - Paziente.
 
-## User story
+## User stories
 - Amministratore del sistema:
     - voglio poter registrare dei presidi nei quali poter effettuare dei tamponi;
     - voglio poter creare delle credenziali da amministratore di un presidio.
