@@ -7,7 +7,7 @@ $codice = $_POST['codice'];
 $note = $_POST['note'];
 
 // controllo sul numero di persone per giorno
-$sql = "UPDATE prenotazioni 
+$sql = "UPDATE prenotazione 
         SET eseguito = true, note = '$note'
         WHERE codice = '$codice'";
 

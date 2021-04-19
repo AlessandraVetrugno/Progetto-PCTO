@@ -4,7 +4,7 @@ require 'vendor/autoload.php';
 include_once "config.php";
 
 // query di inserimento preparata
-$sql = "SELECT * FROM prenotazioni WHERE prenotazioni.giorno = CURDATE()";
+$sql = "SELECT * FROM prenotazione WHERE prenotazione.data = CURDATE()";
 
 use League\Plates\Engine;
 

@@ -11,9 +11,9 @@ $headerMsg = array('class'=>'error', 'message'=>'Prenotazione fallita');
 $firstLine = "Sono state effettuate troppe prenotazioni per questa giornata, scegli un altro giorno";
 
 // query di inserimento preparata
-$sql = "INSERT INTO prenotazioni VALUES (NULL, :codice_fiscale, :giorno, :codice, false, null, 0)";
+$sql = "INSERT INTO prenotazione VALUES (NULL, :codice_fiscale, :giorno, :codice, false, null, 0)";
 
-$sql_numero= "SELECT COUNT(*) AS n_prenotazioni FROM prenotazioni WHERE prenotazioni.giorno = '$giorno'";
+$sql_numero= "SELECT COUNT(*) AS n_prenotazioni FROM prenotazione WHERE prenotazione.data = '$giorno'";
 
 $n_prenotazioni = $pdo->query($sql_numero)->fetch()["n_prenotazioni"];
 

@@ -9,11 +9,11 @@ $templates = new Engine('../view','tpl');
 
 // date prenotate
 $sql= "
-                SELECT prenotazioni.giorno, COUNT(*) AS n_prenotazioni
-                FROM prenotazioni 
-                WHERE prenotazioni.giorno >= CURDATE()
-                GROUP BY prenotazioni.giorno
-                ORDER BY prenotazioni.giorno ASC
+                SELECT prenotazione.data, COUNT(*) AS n_prenotazioni
+                FROM prenotazione 
+                WHERE prenotazione.data >= CURDATE()
+                GROUP BY prenotazione.data
+                ORDER BY prenotazione.data ASC
                 ";
 $stmt = $pdo->query($sql);
 

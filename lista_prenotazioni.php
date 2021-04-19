@@ -10,8 +10,8 @@ $templates = new Engine('./view', 'tpl');
 
 // query di inserimento preparata
 $sql = "SELECT * 
-        FROM prenotazioni
-        ORDER BY giorno DESC";
+        FROM prenotazione
+        ORDER BY data DESC";
 
 $stmt = $pdo->query($sql);
 

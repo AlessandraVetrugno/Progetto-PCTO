@@ -7,12 +7,12 @@ $giorno1 = $_POST['giorno1'];
 $giorno2 = $_POST['giorno2'];
 
 // query di inserimento preparata
-$sql = "SELECT prenotazioni.giorno, COUNT(*) AS n_prenotazioni
-        FROM prenotazioni 
-        WHERE prenotazioni.giorno BETWEEN '$giorno1' AND '$giorno2'
-        AND prenotazioni.annullato = false
-        GROUP BY prenotazioni.giorno
-        ORDER BY prenotazioni.giorno DESC";
+$sql = "SELECT prenotazione.data, COUNT(*) AS n_prenotazioni
+        FROM prenotazione 
+        WHERE prenotazione.data BETWEEN '$giorno1' AND '$giorno2'
+        AND prenotazione.annullato = false
+        GROUP BY prenotazione.data
+        ORDER BY prenotazione.data DESC";
 
 use League\Plates\Engine;
 
