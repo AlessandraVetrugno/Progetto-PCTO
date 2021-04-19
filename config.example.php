@@ -28,14 +28,14 @@ $mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio',
 
 function convertiData($data) {
     GLOBAL $mesi;
-    $giorno = date("d", strtotime($data));
+    $data = date("d", strtotime($data));
     $mese = date("m", strtotime($data));
     $anno = date("Y", strtotime($data));
-    return $giorno.' '.$mesi[(int) $mese - 1].' '.$anno;
+    return $data.' '.$mesi[(int) $mese - 1].' '.$anno;
 
 }
 
 function convertiDataMappa($row) {
-    $row['giorno'] = convertiData($row['giorno']);
+    $row['data'] = convertiData($row['data']);
     return $row;
 }

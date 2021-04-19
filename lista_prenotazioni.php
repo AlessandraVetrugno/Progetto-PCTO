@@ -21,6 +21,7 @@ $result = $stmt->fetchAll();
 $result = array_map('convertiDataMappa', $result);
 
 // se sei una persona che ha fatto il login
+/*
 if(isset($_SESSION['username'])){
     $username = $_SESSION['username'];
 
@@ -34,3 +35,9 @@ if(isset($_SESSION['username'])){
 else {
     echo $templates->render('utente_non_autorizzato');
 }
+*/
+
+echo $templates->render('lista_prenotazioni',
+    [
+        'result' => $result
+    ]);

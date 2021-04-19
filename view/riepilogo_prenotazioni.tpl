@@ -7,7 +7,7 @@
     </tr>
     <?php foreach($result as $row): ?>
         <tr>
-            <td><?php echo $row['giorno'] ?></td>
+            <td><?php echo $row['data'] ?></td>
             <td><?php echo $row['n_prenotazioni'] ?></td>
         </tr>
     <?php endforeach ?>

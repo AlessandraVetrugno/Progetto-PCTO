@@ -20,7 +20,7 @@ $stmt = $pdo->query($sql);
 
 $prenotazione = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 
-$prenotazione['giorno'] = convertiData($prenotazione['giorno']);
+$prenotazione['data'] = convertiData($prenotazione['data']);
 
 $annullaPrenotazione = function () {
     GLOBAL $codice_fiscale;

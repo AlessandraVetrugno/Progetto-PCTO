@@ -18,7 +18,7 @@ $sql= "
 $stmt = $pdo->query($sql);
 
 $dates = array();
-while ($row = $stmt -> fetch(PDO::FETCH_ASSOC)) $dates[$row['giorno']] = $row;
+while ($row = $stmt -> fetch(PDO::FETCH_ASSOC)) $dates[$row['data']] = $row;
 
 function datesPrenotable($dates, $step = '+1 day', $format = 'Y-m-d') {
     $dates_permitted = [];
@@ -26,7 +26,7 @@ function datesPrenotable($dates, $step = '+1 day', $format = 'Y-m-d') {
     for ($i = 0; $i < 10; $current = strtotime( $step, $current )) {
         $day = date( $format, $current );
         if (!key_exists($day, $dates) || $dates[$day]['n_prenotazioni'] < 5) {
-            $dates_permitted[]['giorno'] = date( $format, $current );
+            $dates_permitted[]['data'] = date( $format, $current );
             $i++;
         }
     }
@@ -36,7 +36,7 @@ function datesPrenotable($dates, $step = '+1 day', $format = 'Y-m-d') {
 $dates_prenotable = [];
 
 foreach (datesPrenotable($dates) as $date){
-    $date['giorno_testo'] = convertiData($date['giorno']);
+    $date['giorno_testo'] = convertiData($date['data']);
     $dates_prenotable[] = $date;
 }
 
