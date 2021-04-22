@@ -16,28 +16,28 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `amministratore_di_sistema`
+-- Table structure for table `amministratore_sistema`
 --
 
-DROP TABLE IF EXISTS `amministratore_di_sistema`;
+DROP TABLE IF EXISTS `amministratore_sistema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `amministratore_di_sistema` (
+CREATE TABLE `amministratore_sistema` (
   `id` int(11) DEFAULT NULL,
-  `usurname` varchar(45) NOT NULL,
+  `username` varchar(45) NOT NULL,
   `codice` int(11) NOT NULL,
   `password` varchar(45) NOT NULL,
-  UNIQUE KEY `amministratore_di_sistema_codice_uindex` (`codice`)
+  UNIQUE KEY `amministratore_sistema_codice_uindex` (`codice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `amministratore_di_sistema`
+-- Dumping data for table `amministratore_sistema`
 --
 
-LOCK TABLES `amministratore_di_sistema` WRITE;
-/*!40000 ALTER TABLE `amministratore_di_sistema` DISABLE KEYS */;
-/*!40000 ALTER TABLE `amministratore_di_sistema` ENABLE KEYS */;
+LOCK TABLES `amministratore_sistema` WRITE;
+/*!40000 ALTER TABLE `amministratore_sistema` DISABLE KEYS */;
+/*!40000 ALTER TABLE `amministratore_sistema` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `amministratore_presidio`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `amministratore_presidio` (
   `id` int(11) NOT NULL,
-  `usurname` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `codice` int(11) NOT NULL,
   `password` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
@@ -76,7 +76,7 @@ DROP TABLE IF EXISTS `gestisce`;
 CREATE TABLE `gestisce` (
   `id` int(11) NOT NULL,
   `id_prenotazione` int(11) NOT NULL,
-  `id_operatore_sanitario` int(11) NOT NULL,
+  `id_presidio` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -99,7 +99,7 @@ DROP TABLE IF EXISTS `operatore_sanitario`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `operatore_sanitario` (
   `id` int(11) NOT NULL,
-  `usurname` varchar(150) NOT NULL,
+  `username` varchar(150) NOT NULL,
   `codice` int(11) NOT NULL,
   `password` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
