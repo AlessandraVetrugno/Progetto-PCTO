@@ -13,22 +13,22 @@ $codice_fiscale = $_POST['codice_fiscale'];
 $codice_prenotazione = $_POST['codice_prenotazione'];
 
 // query di inserimento preparata
-$sql = "SELECT * FROM prenotazioni
-        WHERE prenotazioni.codice = '$codice_prenotazione'";
+$sql = "SELECT * FROM prenotazione
+        WHERE prenotazione.codice = '$codice_prenotazione'";
 
 $stmt = $pdo->query($sql);
 
 $prenotazione = $stmt->fetchAll(PDO::FETCH_ASSOC)[0];
 
-$prenotazione['giorno'] = convertiData($prenotazione['giorno']);
+$prenotazione['data'] = convertiData($prenotazione['data']);
 
 $annullaPrenotazione = function () {
     GLOBAL $codice_fiscale;
     echo "ciao";
     GLOBAL $pdo;
-    $sql = "UPDATE prenotazioni 
-            SET prenotazioni.annullato = true
-            WHERE prenotazioni.codice = '$codice_fiscale'";
+    $sql = "UPDATE prenotazione 
+            SET prenotazione.annullato = true
+            WHERE prenotazione.codice = '$codice_fiscale'";
     $pdo->query($sql);
 };
 

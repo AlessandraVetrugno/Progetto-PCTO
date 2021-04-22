@@ -6,7 +6,7 @@
             <tr>
                 <th>CODICE FISCALE</th>
                 <th>CODICE PRENOTAZIONE</th>
-                <th>GIORNO</th>
+                <th>DATA</th>
                 <th>NOTE</th>
                 <th>ANNULLATO</th>
             </tr>
@@ -15,7 +15,7 @@
             <tr>
                 <td data-label="Codice fiscale"><?= $result['codice_fiscale'] ?></td>
                 <td data-label="Codice prenotazione"><?= $result['codice'] ?></td>
-                <td data-label="Giorno"><?= $result['giorno'] ?></td>
+                <td data-label="Data"><?= $result['data'] ?></td>
                 <td data-label="Note"><?= $result['note'] ?> &nbsp;</td>
                 <td data-label="Annullato">
                     <mark class=<?php if ($result['annullato']) echo "secondary"; else echo "tertiary"; ?> >

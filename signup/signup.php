@@ -9,7 +9,7 @@ $psw_hashed = password_hash($password, PASSWORD_DEFAULT);
 // password_verify($password, $psw_hashed)
 
 // query di inserimento preparata
-$sql = "INSERT INTO utenti VALUES (NULL, '$username', '$psw_hashed')";
+$sql = "INSERT INTO operatore_sanitario VALUES (NULL, '$username', '$psw_hashed')";
 
 $pdo->query($sql);
 

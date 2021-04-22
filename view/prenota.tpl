@@ -5,10 +5,10 @@
         <legend>Inserisci la prenotazione</legend>
         <label>Codice</label>
         <input type="text" placeholder="Codice fiscale" name="codice_fiscale">
-        <label>Giorno</label>
-        <select name="giorno" placeholder="Giorno scelto">
+        <label>data</label>
+        <select name="data" placeholder="Giorno scelto">
             <?php foreach($dates as $date): ?>
-                <option value=<?= $date['giorno'] ?>><?= $date['giorno_testo'] ?></option>
+                <option value=<?= $date['data'] ?>><?= $date['giorno_testo'] ?></option>
             <?php endforeach ?>
         </select>
         <input type="submit" value="Invia la tua richiesta">
