@@ -1,6 +1,6 @@
 <?php
 
-require '../phpqrcode/qrlib.php';
+//require '../phpqrcode/qrlib.php';
 include_once "../config.php";
 
 // variabili valorizzate tramite POST
@@ -35,7 +35,7 @@ if ($n_prenotazioni < 5) {
     $firstLine = "Codice della prenotazione: $codice<br />QR Code: ";
     $QRCode = QRCodeGenerator($codice);
 }
-
+/*
 function QRCodeGenerator($data) {
     // ECC Level, livello di correzione dell'errore (valori possibili in ordine crescente: L,M,Q,H - da low a high)
     $errorCorrectionLevel = 'L';
