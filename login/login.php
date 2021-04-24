@@ -17,14 +17,30 @@ $sql_admin_sys = "SELECT * FROM amministratore_sistema WHERE codice = :codice";
 $sql_admin_pres = "SELECT * FROM amministratore_presidio WHERE codice = :codice";
 $sql_op_san = "SELECT * FROM operatore_sanitario WHERE codice = :codice";
 
+/*$stmt = $pdo -> prepare($sql_op_san);
+$stmt->execute(['codice'=>$codice]);
+$riga = $stmt->fetch();
 
+if($riga == false){
+    echo $templates->render('login_fallito', ['codice' => $codice]);
+}else {
+    $pass_hash = $riga['password'];
+    if (password_verify($password, $pass_hash)) {
+        $_SESSION['codice'] = $codice;
+        echo $templates->render('login_effettuato', ['username' => $riga['username']]);
+    } //la password è sbagliata
+    else {
+        echo $templates->render('login_effettuato', ['codice' => $codice]);
+    }
+}
+*/
 //eseguo la query per le credenziali da amministratore di sistema
 $stmt = $pdo->prepare($sql_admin_sys);
 $stmt->execute([
     'codice' => $codice
 ]);
 $riga = $stmt -> fetch();
-if ($riga == false) {
+    if ($riga == false) {
 
     //eseguo la query per le credenziali da amministratore presidio
     $stmt = $pdo->prepare($sql_admin_pres);
@@ -82,3 +98,4 @@ if ($riga == false) {
         echo $templates->render('login_fallito', ['codice' => $codice]);
     }
 }
+
