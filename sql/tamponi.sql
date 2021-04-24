@@ -26,7 +26,7 @@ CREATE TABLE `amministratore_presidio` (
   `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `codice` int(11) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(150) NOT NULL,
   `id_presidio` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `amministratore_presidio_codice_uindex` (`codice`),
@@ -55,7 +55,7 @@ CREATE TABLE `amministratore_sistema` (
   `id` int(11) DEFAULT NULL,
   `username` varchar(45) NOT NULL,
   `codice` int(11) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(150) NOT NULL,
   UNIQUE KEY `amministratore_sistema_codice_uindex` (`codice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -77,16 +77,16 @@ DROP TABLE IF EXISTS `operatore_sanitario`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `operatore_sanitario` (
-  `id` int(11) NOT NULL,
-  `username` varchar(150) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(150) DEFAULT NULL,
   `codice` int(11) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `password` varchar(150) NOT NULL,
   `id_presidio` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `operatore_sanitario_codice_uindex` (`codice`),
   KEY `operatore_sanitario_presidio_id_fk` (`id_presidio`),
   CONSTRAINT `operatore_sanitario_presidio_id_fk` FOREIGN KEY (`id_presidio`) REFERENCES `presidio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -95,6 +95,7 @@ CREATE TABLE `operatore_sanitario` (
 
 LOCK TABLES `operatore_sanitario` WRITE;
 /*!40000 ALTER TABLE `operatore_sanitario` DISABLE KEYS */;
+INSERT INTO `operatore_sanitario` VALUES (1,'Gino Bartali',1000000001,'$2y$10$0C02N4M1sZptM09pPxpHP.05o3slXbxfTZ9N7yQYWeWjVpKQJtE2S',1);
 /*!40000 ALTER TABLE `operatore_sanitario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,6 +154,7 @@ CREATE TABLE `presidio` (
 
 LOCK TABLES `presidio` WRITE;
 /*!40000 ALTER TABLE `presidio` DISABLE KEYS */;
+INSERT INTO `presidio` VALUES (1,'Centro Volta','Via della Volta',1);
 /*!40000 ALTER TABLE `presidio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +167,7 @@ DROP TABLE IF EXISTS `provincia`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `provincia` (
   `id` int(11) NOT NULL,
-  `nome` int(11) NOT NULL,
+  `nome` varchar(45) NOT NULL,
   `id_regione` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `provincia_regione_id_fk` (`id_regione`),
@@ -179,6 +181,7 @@ CREATE TABLE `provincia` (
 
 LOCK TABLES `provincia` WRITE;
 /*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
+INSERT INTO `provincia` VALUES (1,'Brescia',1);
 /*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,7 +194,7 @@ DROP TABLE IF EXISTS `regione`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `regione` (
   `id` int(11) NOT NULL,
-  `nome` int(11) DEFAULT NULL,
+  `nome` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -202,6 +205,7 @@ CREATE TABLE `regione` (
 
 LOCK TABLES `regione` WRITE;
 /*!40000 ALTER TABLE `regione` DISABLE KEYS */;
+INSERT INTO `regione` VALUES (1,'Lombardia');
 /*!40000 ALTER TABLE `regione` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -214,4 +218,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-22 17:20:09
+-- Dump completed on 2021-04-24 11:39:30
