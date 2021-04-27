@@ -17,23 +17,6 @@ $sql_admin_sys = "SELECT * FROM amministratore_sistema WHERE codice = :codice";
 $sql_admin_pres = "SELECT * FROM amministratore_presidio WHERE codice = :codice";
 $sql_op_san = "SELECT * FROM operatore_sanitario WHERE codice = :codice";
 
-/*$stmt = $pdo -> prepare($sql_op_san);
-$stmt->execute(['codice'=>$codice]);
-$riga = $stmt->fetch();
-
-if($riga == false){
-    echo $templates->render('login_fallito', ['codice' => $codice]);
-}else {
-    $pass_hash = $riga['password'];
-    if (password_verify($password, $pass_hash)) {
-        $_SESSION['codice'] = $codice;
-        echo $templates->render('login_effettuato', ['username' => $riga['username']]);
-    } //la password è sbagliata
-    else {
-        echo $templates->render('login_effettuato', ['codice' => $codice]);
-    }
-}
-*/
 //eseguo la query per le credenziali da amministratore di sistema
 $stmt = $pdo->prepare($sql_admin_sys);
 $stmt->execute([
@@ -62,10 +45,11 @@ $riga = $stmt -> fetch();
         } else {
             $pass_hash = $riga['password'];
 
-            // la password è corretta
+            // la password è corretta per l'operatore_  sanitario
             if (password_verify($password, $pass_hash)) {
                 $_SESSION['codice'] = $codice;
-                echo $templates->render('login_effettuato', ['username' => $riga['username']]);
+                $_SESSION['ruolo'] = 'operatore';
+                echo $templates->render('login_effettuato', ['codice' => $codice, 'username' => $riga['username'], 'ruolo' => 'operatore']);
             }
             //la password è sbagliata
             else {
@@ -75,9 +59,10 @@ $riga = $stmt -> fetch();
     } else {
         $pass_hash = $riga['password'];
 
-        // la password è corretta
+        // la password è corretta per l'amministratore_presidio
         if (password_verify($password, $pass_hash)) {
             $_SESSION['codice'] = $codice;
+            $_SESSION['ruolo'] = 'amministratore_presidio';
             echo $templates->render('login_effettuato', ['username' => $riga['username']]);
         }
         //la password è sbagliata
@@ -88,9 +73,10 @@ $riga = $stmt -> fetch();
 } else {
     $pass_hash = $riga['password'];
 
-    // la password è corretta
+    // la password è corretta amministratore_sistema
     if (password_verify($password, $pass_hash)) {
         $_SESSION['codice'] = $codice;
+        $_SESSION['ruolo'] = 'amministratore_sistema';
         echo $templates->render('login_effettuato', ['username' => $riga['username']]);
     }
     //la password è sbagliata
