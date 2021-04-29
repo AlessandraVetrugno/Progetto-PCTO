@@ -1,3 +1,6 @@
 <?php $this->layout('main', ['argomento' => 'Login fallito', 'rootPathRef' => '../' ]) ?>
 
-<p>Login fallito per <mark><?= $username ?></mark></p>
+<div>
+    <p>Login fallito per <mark><?= $codice ?></mark></p>
+    <button class="btn"><a href="../login/index.php">Torna indietro</a></button>
+</div>
