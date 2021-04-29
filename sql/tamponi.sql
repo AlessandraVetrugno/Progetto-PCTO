@@ -35,14 +35,6 @@ CREATE TABLE `amministratore_presidio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `amministratore_presidio`
---
-
-LOCK TABLES `amministratore_presidio` WRITE;
-/*!40000 ALTER TABLE `amministratore_presidio` DISABLE KEYS */;
-/*!40000 ALTER TABLE `amministratore_presidio` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `amministratore_sistema`
@@ -60,14 +52,6 @@ CREATE TABLE `amministratore_sistema` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `amministratore_sistema`
---
-
-LOCK TABLES `amministratore_sistema` WRITE;
-/*!40000 ALTER TABLE `amministratore_sistema` DISABLE KEYS */;
-/*!40000 ALTER TABLE `amministratore_sistema` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `operatore_sanitario`
@@ -89,15 +73,6 @@ CREATE TABLE `operatore_sanitario` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `operatore_sanitario`
---
-
-LOCK TABLES `operatore_sanitario` WRITE;
-/*!40000 ALTER TABLE `operatore_sanitario` DISABLE KEYS */;
-INSERT INTO `operatore_sanitario` VALUES (1,'Gino Bartali',1000000001,'$2y$10$0C02N4M1sZptM09pPxpHP.05o3slXbxfTZ9N7yQYWeWjVpKQJtE2S',1);
-/*!40000 ALTER TABLE `operatore_sanitario` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `prenotazione`
@@ -121,14 +96,6 @@ CREATE TABLE `prenotazione` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `prenotazione`
---
-
-LOCK TABLES `prenotazione` WRITE;
-/*!40000 ALTER TABLE `prenotazione` DISABLE KEYS */;
-/*!40000 ALTER TABLE `prenotazione` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `presidio`
@@ -140,7 +107,7 @@ DROP TABLE IF EXISTS `presidio`;
 CREATE TABLE `presidio` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `via` varchar(45) NOT NULL,
+  `indirizzo` varchar(255) NOT NULL,
   `id_provincia` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `presidio_provincia_id_fk` (`id_provincia`),
@@ -148,15 +115,6 @@ CREATE TABLE `presidio` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `presidio`
---
-
-LOCK TABLES `presidio` WRITE;
-/*!40000 ALTER TABLE `presidio` DISABLE KEYS */;
-INSERT INTO `presidio` VALUES (1,'Centro Volta','Via della Volta',1);
-/*!40000 ALTER TABLE `presidio` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `provincia`
@@ -175,15 +133,6 @@ CREATE TABLE `provincia` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `provincia`
---
-
-LOCK TABLES `provincia` WRITE;
-/*!40000 ALTER TABLE `provincia` DISABLE KEYS */;
-INSERT INTO `provincia` VALUES (1,'Brescia',1);
-/*!40000 ALTER TABLE `provincia` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `regione`
@@ -199,15 +148,6 @@ CREATE TABLE `regione` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `regione`
---
-
-LOCK TABLES `regione` WRITE;
-/*!40000 ALTER TABLE `regione` DISABLE KEYS */;
-INSERT INTO `regione` VALUES (1,'Lombardia');
-/*!40000 ALTER TABLE `regione` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -218,4 +158,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-04-24 11:39:30
+-- Dump completed on 2021-04-29 10:19:50
