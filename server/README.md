@@ -32,4 +32,4 @@ Partendo da questo spunto, verrà qui sviluppata un'applicazione che risolva que
     - voglio poter essere avvisato dell'avvicinarsi della data dell'appuntamento.
   
 ## Diagramma Entità/Relazioni
-![Diagramma ER](server/assets/images/ER.png "Diagramma ER")
+![Diagramma ER](./assets/images/ER.png "Diagramma ER")
