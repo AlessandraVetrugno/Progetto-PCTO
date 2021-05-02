@@ -1,38 +1,34 @@
-#Scelte front end
-Tutte le scelte fatte per il front end, struttura, restrizioni, stile, colori.
+# Client side
+Qui sono presenti le scelte più incisive fatte per il front-end (_ex. struttura, restrizioni, stile, colori, etc_).
 
-## Pagine 
+## Pagine del front-end 
 
 - Home
-- Login
-- Visualizza prenotazione
-- Annulla prenotazione
-- Operatore sanitario
-- Amministratore presidio
-- Amministratore sistema
+- Area personale
+- Prenota un tampone
 
 
-## Cosa può vedere chi
+## Autorizzazioni
 
 - home (tutti)
 - login (OP, AP, AS)
 - riepilogo giornaliero (OP, AP, AS)
-- annulla prenotazione (U, OS)
-- registra utenti (AP, AS)
-- registra presidio (AS)
-- registra amministratore presidio (AS)
-- dati sulle prenotazioni (AP, AS)
-- dati generali sui tamponi (AS)
+- annullare una prenotazione (U, OS)
+- registrare degli utenti (AP, AS)
+- registrare un presidio (AS)
+- registrare un amministratore di presidio (AS)
+- visualizzare i dati delle prenotazioni (AP, AS)
+- visualizzare le statistiche relative all'andamento delle tamponazioni nel territorio (AS)
 
-## Home
+> AS: amministratore di sistema
 
-Form prenotazione, pulsanti login, visualizza prenotazione, annulla prenotazione.
+> AP: amministratore di presidio
 
-## Operatore sanitario
+> OP: operatore sanitario
 
-Prenotazioni giornaliere, annulla tampone, segna come eseguito
+> U: utente
 
-### Cosa utilizziamo
+### Cosa utilizziamo per
 
-- libreria per grafici: https://www.chartjs.org/
-- layout di prova: adobe xd
+- realizzare il front-end: [React](https://reactjs.org/)
+- creare i mockup: [Adobe XD](https://www.adobe.com/products/xd.html)
