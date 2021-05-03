@@ -2,6 +2,7 @@ import React from "react";
 import { Redirect, Link } from "react-router-dom";
 import "../../assets/styles/home.css";
 import BannerImage from "url:../../assets/img/banner.png";
+import PrenotaBtn from "./PrenotaBtn";
 
 function HomePage() {
 	return (
@@ -16,7 +17,7 @@ function HomePage() {
 function NavBar() {
 	return (
 		<div className="navbar">
-			<img src={BannerImage} />
+			<img className="banner" src={BannerImage}/>
 		</div>
 	);
 }
@@ -45,6 +46,7 @@ function Content() {
 	return (
 		<div className="content">
 			questo è il contenuto della pagina
+			<PrenotaBtn />
 		</div>
 	);
 }
