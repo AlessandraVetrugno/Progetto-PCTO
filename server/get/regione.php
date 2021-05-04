@@ -5,7 +5,7 @@ include_once 'config.php';
 //prende il nome della regione dal vettore get
 $nome_regione = $_GET['regione'];
 
-$sql = 'SELECT * FROM regione WHERE regione.nome = :nome_regione';
+$sql = 'SELECT regione.nome FROM regione';
 
 //preparo la query
 $stmt = $pdo -> prepare($sql);
