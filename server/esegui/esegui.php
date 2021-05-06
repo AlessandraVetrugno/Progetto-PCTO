@@ -18,4 +18,4 @@ $stmt->execute([
 ]);
 
 // ridirige il browser verso la pagina indicata nella location
-header('Location:../lista_prenotazioni.php');
+//header('Location:../lista_prenotazioni.php');

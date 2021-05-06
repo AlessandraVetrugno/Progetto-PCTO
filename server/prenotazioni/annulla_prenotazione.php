@@ -13,4 +13,4 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute(['codice'=>$codice_prenotazione]);
 
 // ridirige il browser verso la pagina indicata nella location
-header('Location:./prenota/index.php');
+//header('Location:./prenotazioni/index.php');
