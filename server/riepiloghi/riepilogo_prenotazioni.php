@@ -21,7 +21,11 @@ $stmt -> execute([
 // estraggo le righe di risposta che finiranno come vettori
 $result = $stmt->fetchAll();
 
-$result = array_map('convertiDataMappa', $result);
+$date = array_map('convertiDataMappa', $result);
 $intervallo = ['inizio' => convertiData($giorno1), 'fine' => convertiData($giorno2)];
 
-echo '[result:'.json_encode($result).',intervallo:'.json_encode($intervallo).']';
+$result = array();
+$result['date'] = $date;
+$result['intervallo'] = $intervallo;
+
+echo json_encode($result);

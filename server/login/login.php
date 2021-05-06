@@ -40,20 +40,20 @@ $riga = $stmt -> fetch();
         $riga = $stmt -> fetch();
         if ($riga == false) {
             //eseguo il template login fallito nel caso non esista l'utente
-            echo $templates->render('login_fallito', ['codice' => $codice]);
+            echo 'username o password errati';
 
         } else {
             $pass_hash = $riga['password'];
 
-            // la password è corretta per l'operatore_  sanitario
+            // la password è corretta per l'operatore_sanitario
             if (password_verify($password, $pass_hash)) {
                 $_SESSION['codice'] = $codice;
                 $_SESSION['ruolo'] = 'operatore';
-                echo $templates->render('login_effettuato', ['codice' => $codice, 'username' => $riga['username'], 'ruolo' => 'operatore']);
+                echo 'login avvenuto con successo';
             }
             //la password è sbagliata
             else {
-                echo $templates->render('login_fallito', ['codice' => $codice]);
+                echo 'username o password errati';
             }
         }
     } else {
@@ -63,11 +63,11 @@ $riga = $stmt -> fetch();
         if (password_verify($password, $pass_hash)) {
             $_SESSION['codice'] = $codice;
             $_SESSION['ruolo'] = 'amministratore_presidio';
-            echo $templates->render('login_effettuato', ['username' => $riga['username']]);
+            echo 'login avvenuto con successo';
         }
         //la password è sbagliata
         else {
-            echo $templates->render('login_fallito', ['codice' => $codice]);
+            echo 'username o password errati';
         }
     }
 } else {
@@ -77,11 +77,11 @@ $riga = $stmt -> fetch();
     if (password_verify($password, $pass_hash)) {
         $_SESSION['codice'] = $codice;
         $_SESSION['ruolo'] = 'amministratore_sistema';
-        echo $templates->render('login_effettuato', ['username' => $riga['username']]);
+        echo 'login avvenuto con successo';
     }
     //la password è sbagliata
     else {
-        echo $templates->render('login_fallito', ['codice' => $codice]);
+        echo 'username o password errati';
     }
 }
 

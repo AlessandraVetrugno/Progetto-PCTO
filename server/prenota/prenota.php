@@ -23,6 +23,7 @@ $sql = "INSERT INTO prenotazione (codice_fiscale, codice, data, id_presidio)
 
 $headerMsg['class'] = 'success';
 $headerMsg['message'] = 'Prenotazione avvenuta con successo';
+
 // inviamo la query al database che la tiene pronta
 $stmt = $pdo->prepare($sql);
 // inviamo i dati concreti che verranno messi al posto dei segnaposto
