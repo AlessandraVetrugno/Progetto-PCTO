@@ -1,17 +1,30 @@
 <?php
 
-include_once "config.php";
+include_once "../config.php";
 
-use League\Plates\Engine;
+$response = array();
+$response['status'] = 0;
+
 // variabili valorizzate tramite POST
 $codice_fiscale = $_POST['codice_fiscale'];
 $codice_prenotazione = $_POST['codice_prenotazione'];
 
-$sql = 'SELECT * FROM prenotazione WHERE prenotazione.codice_fiscale = :codice_fiscale AND prenotazione.codice = :codice';
+$sql = 'SELECT prenotazione.id, prenotazione.codice_fiscale, prenotazione.data, prenotazione.codice,
+        prenotazione.eseguito, prenotazione.note, prenotazione.annullato, presidio.nome AS nome_presidio,
+        provincia.nome AS nome_provincia
+        FROM prenotazione, presidio, provincia
+        WHERE prenotazione.codice_fiscale = :codice_fiscale AND prenotazione.codice = :codice 
+          AND prenotazione.id_presidio = presidio.id AND presidio.id_provincia = provincia.id';
 
 $stmt = $pdo ->prepare($sql);
 $stmt->execute([
     'codice_fiscale'=>$codice_fiscale,
     'codice'=>$codice_prenotazione
 ]);
-echo json_encode($stmt->fetch());
+$dati = $stmt->fetch();
+if($dati != null){
+  $response['prenotazione'] = $dati;
+  $response['status'] = 1;
+}
+
+echo json_encode($response);

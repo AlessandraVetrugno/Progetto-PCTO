@@ -1,5 +1,5 @@
 <?php
-include_once 'config.php';
+include_once '../config.php';
 
 //prendo il codice dell'operatore dall'array get
 $codice = $_GET['codice'];

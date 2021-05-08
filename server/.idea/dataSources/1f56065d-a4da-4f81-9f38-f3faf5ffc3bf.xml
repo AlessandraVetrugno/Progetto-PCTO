@@ -1282,10 +1282,11 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
     <column id="368" parent="353" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
     </column>
     <column id="369" parent="353" name="username">
       <Position>2</Position>
-      <DataType>varchar(45)|0s</DataType>
+      <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
     <column id="370" parent="353" name="codice">

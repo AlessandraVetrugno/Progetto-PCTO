@@ -14,7 +14,7 @@ function datesPrenotable($dates, $step = '+1 day', $format = 'Y-m-d') {
     return $dates_permitted;
 }
 
-include_once 'config.php';
+include_once '../config.php';
 
 //query
 $sql= "SELECT prenotazione.data, COUNT(*) AS n_prenotazioni

@@ -1,5 +1,8 @@
 <?php
-include_once 'config.php';
+include_once '../config.php';
+
+$response = array();
+$response['status'] = 0;
 
 $nome_presidio = $_GET['nome_presidio'];
 
@@ -11,7 +14,13 @@ $sql = 'SELECT prenotazione.id, prenotazione.codice_fiscale, prenotazione.data, 
 $stmt = $pdo->prepare($sql);
 
 $stmt->execute(['nome_presidio'=>$nome_presidio]);
+$dati = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+if($dati != null){
+    $response['dati'] = $dati;
+    $response['status'] = 1;
+}
+
+echo json_encode($response);
 
 

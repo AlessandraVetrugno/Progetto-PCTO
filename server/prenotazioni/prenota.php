@@ -1,12 +1,15 @@
 <?php
 include_once "../config.php";
 
+$dati = file_get_contents("php://input");
+$dati = json_decode($dati, true);
+
 // variabili valorizzate tramite POST
-$codice_fiscale = $_POST['codice_fiscale'];
-$data = $_POST['data'];
-$nome_presidio = $_GET['presidio'];
-$nome_provincia = $_GET['provincia'];
-$nome_regione = $_GET['regione'];
+$codice_fiscale = $dati['codice_fiscale'];
+$data = $dati['data'];
+$nome_presidio = $dati['presidio'];
+$nome_provincia = $dati['provincia'];
+$nome_regione = $dati['regione'];
 
 
 $codice = strtoupper(uniqid());

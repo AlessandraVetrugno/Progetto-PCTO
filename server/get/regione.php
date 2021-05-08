@@ -1,6 +1,6 @@
 <?php
 
-include_once 'config.php';
+include_once '../config.php';
 
 //prende il nome della regione dal vettore get
 $nome_regione = $_GET['regione'];

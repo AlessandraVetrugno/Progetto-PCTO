@@ -2,6 +2,11 @@
 
 include_once "../config.php";
 
+//risposta
+$response = array();
+$response['status'] = 0;
+
+//variabili valorizzate tramite POST
 $giorno1 = $_POST['giorno1'];
 $giorno2 = $_POST['giorno2'];
 
@@ -21,11 +26,13 @@ $stmt -> execute([
 // estraggo le righe di risposta che finiranno come vettori
 $result = $stmt->fetchAll();
 
-$date = array_map('convertiDataMappa', $result);
-$intervallo = ['inizio' => convertiData($giorno1), 'fine' => convertiData($giorno2)];
+if($result != null){
+    $date = array_map('convertiDataMappa', $result);
+    $intervallo = ['inizio' => convertiData($giorno1), 'fine' => convertiData($giorno2)];
 
-$result = array();
-$result['date'] = $date;
-$result['intervallo'] = $intervallo;
+    $response['date'] = $date;
+    $response['intervallo'] = $intervallo;
+    $response['status'] = 1;
+}
 
 echo json_encode($result);

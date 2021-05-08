@@ -1,6 +1,6 @@
 <?php
 
-include_once 'config.php';
+include_once '../config.php';
 
 //prendo il nome del presidio, della provincia e della regione
 $nome_provincia = $_GET['provincia'];
