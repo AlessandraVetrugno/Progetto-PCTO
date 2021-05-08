@@ -13,8 +13,8 @@ $nome_regione = $dati['regione'];
 
 
 $codice = strtoupper(uniqid());
-$headerMsg = array('class'=>'error', 'message'=>'Prenotazione fallita');
-$firstLine = "Sono state effettuate troppe prenotazioni per questa giornata, scegli un altro giorno";
+//$headerMsg = array('class'=>'error', 'message'=>'Prenotazione fallita');
+//$firstLine = "Sono state effettuate troppe prenotazioni per questa giornata, scegli un altro giorno";
 
 // query di inserimento preparata
 $sql = "INSERT INTO prenotazione (codice_fiscale, codice, data, id_presidio)
@@ -24,8 +24,8 @@ $sql = "INSERT INTO prenotazione (codice_fiscale, codice, data, id_presidio)
            AND presidio.id_provincia = provincia.id AND provincia.nome = :nome_provincia
            AND provincia.id_regione = regione.id AND regione.nome = :nome_regione))";
 
-$headerMsg['class'] = 'success';
-$headerMsg['message'] = 'Prenotazione avvenuta con successo';
+//$headerMsg['class'] = 'success';
+//$headerMsg['message'] = 'Prenotazione avvenuta con successo';
 
 // inviamo la query al database che la tiene pronta
 $stmt = $pdo->prepare($sql);
@@ -33,11 +33,13 @@ $stmt = $pdo->prepare($sql);
 $stmt->execute(
     [
         'codice_fiscale' => $codice_fiscale,
-        'data' => $data,
-        'codice' => $codice,
+'codice_prenotazione' => $codice,
+'data' => $data,
         'nome_presidio' => $nome_presidio,
         'nome_provincia' => $nome_provincia,
         'nome_regione' => $nome_regione
     ]
 );
+
+echo json_encode('coglioni non vado');
 
