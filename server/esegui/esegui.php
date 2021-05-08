@@ -6,14 +6,16 @@ include_once "../config.php";
 $codice = $_POST['codice'];
 $note = $_POST['note'];
 
-// controllo sul numero di persone per giorno
 $sql = "UPDATE prenotazione 
-        SET eseguito = true, note = '$note'
-        WHERE codice = '$codice'";
+        SET eseguito = true, note = :note
+        WHERE codice = :codice";
 
 // eseguiamo la query
-$pdo->query($sql);
+$stmt = $pdo->prepare($sql);
+$stmt->execute([
+    'codice'=>$codice,
+    'note'=>$note
+]);
 
 // ridirige il browser verso la pagina indicata nella location
-header('Location:../lista_prenotazioni.php');
-exit(0);
+//header('Location:../lista_prenotazioni.php');
