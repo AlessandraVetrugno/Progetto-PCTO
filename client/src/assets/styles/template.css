@@ -7,24 +7,25 @@
 	justify-content: space-between;
 }
 
-html,
-body {
-	margin: 0;
-}
-
 .content {
+	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	align-items: center;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	font-size: xx-large;
+	padding: 100px;
+	padding-top: 0;
 }
 
 .navbar {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
+}
+
+.banner {
+	width: 1000px;
 }
 
 .footer {
@@ -61,11 +62,22 @@ body {
 	color: #171516;
 }
 
-.blur {
+.blur > * {
 	filter: blur(2px);
 	pointer-events: none;
 	user-select: none;
 }
+
+.blur .no-blur {
+	filter: none;
+}
+
+.no-blur {
+	/* filter: blur(0); */
+	pointer-events: all;
+	user-select: all;
+}
+
 
 .hidden {
 	visibility: hidden;
