@@ -1,0 +1,28 @@
+[
+    {
+        "regione": "Lombardia",
+        "province": [
+            {
+                "provincia": "Brescia",
+                "presidi": ["Santa Giulia", "Vaxxino", "YouVax"]
+            },
+            {
+                "provincia": "Milano",
+                "presidi": ["Santa Giulia", "Vaxxino", "YouVax"]
+            }
+        ]
+    },
+    {
+        "regione": "Toscana",
+        "province": [
+            {
+                "provincia": "Firenze",
+                "presidi": ["Santa Giulia", "Vaxxino", "YouVax"]
+            },
+            {
+                "provincia": "Livorno",
+                "presidi": ["Santa Giulia", "Vaxxino", "YouVax"]
+            }
+        ]
+    }
+]
