@@ -9,6 +9,7 @@
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"antd": "^4.15.4",
 		"app": "^0.1.0",
 		"parcel": "^2.0.0-beta.2",
 		"react": "^16.14.0",
