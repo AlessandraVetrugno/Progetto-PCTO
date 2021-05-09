@@ -39,7 +39,7 @@ $stmt->execute(
         'nome_regione' => $nome_regione
     ]
 );
-
+//query per prendere la prenotazione
 $sql_pren = 'SELECT prenotazione.id, prenotazione.codice_fiscale, prenotazione.data, prenotazione.codice,
         prenotazione.eseguito, prenotazione.note, prenotazione.annullato, presidio.nome AS nome_presidio,
         provincia.nome AS nome_provincia
@@ -59,6 +59,5 @@ if($prenotazione != null){
     $response['dati'] = $prenotazione;
     $response['status'] = 1;
 }
-
+//mando la risposta
 echo json_encode($response);
-

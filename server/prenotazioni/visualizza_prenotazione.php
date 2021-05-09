@@ -14,7 +14,7 @@ $sql = 'SELECT prenotazione.id, prenotazione.codice_fiscale, prenotazione.data, 
         provincia.nome AS nome_provincia
         FROM prenotazione, presidio, provincia
         WHERE prenotazione.codice_fiscale = :codice_fiscale AND prenotazione.codice = :codice 
-          AND prenotazione.id_presidio = presidio.id AND presidio.id_provincia = provincia.id';
+          AND prenotazione.id_presidio = presidio.id AND presidio.id_provincia = provincia.id AND prenotazione.annullato = false';
 
 $stmt = $pdo ->prepare($sql);
 $stmt->execute([
