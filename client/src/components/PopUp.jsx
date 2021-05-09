@@ -1,24 +1,35 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import '../assets/styles/popup.css';
 
 export function PopUp({ component: ComponentJSX }) {
-
 	return (
 		<div className="popup hidden">
-			<ComponentJSX />
+			{ComponentJSX}
             <CloseBtn />
 		</div>
 	);
 }
 
 function CloseBtn(){
+    const [popupClass, setClass] = useState(null);
+
+    useEffect(() => {
+        var popups = document.getElementsByClassName('popup');
+
+        // lo converto in un array
+        popups = Object.entries(popups);
+
+        // mantengo solo quelli visibili
+        popups.filter(popup => {return !popup?.classList.includes('hidden')});
+
+        var popup = popups[0][1].childNodes[0];
+
+        setClass(popup.classList[0]);
+    })
     return (
         <i 
             className="fas fa-times popup-close" 
-            onClick={() => {
-                    console.log('chiudi popup');
-                    appear(false, 'prenota-window');
-            }}
+            onClick={ () => { appear(false, popupClass) } }
             aria-hidden="true" />
     )
 }
