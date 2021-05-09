@@ -10,10 +10,8 @@ import 'antd/dist/antd.css';
 const rootElement = document.getElementById("app");
 
 ReactDOM.render(
-	<React.StrictMode>
-		<ConfigProvider locale={itIT}>
-			<App />
-		</ConfigProvider>
-	</React.StrictMode>,
+	<ConfigProvider locale={itIT}>
+		<App />
+	</ConfigProvider>,
 	rootElement
 );
