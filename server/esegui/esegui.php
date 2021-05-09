@@ -8,7 +8,7 @@ $note = $_POST['note'];
 
 $sql = "UPDATE prenotazione 
         SET eseguito = true, note = :note
-        WHERE codice = :codice";
+        WHERE codice = :codice AND prenotazione.annullato = false";
 
 // eseguiamo la query
 $stmt = $pdo->prepare($sql);

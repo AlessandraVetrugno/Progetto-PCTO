@@ -10,7 +10,7 @@ $nome_presidio = $_GET['nome_presidio'];
 $sql = 'SELECT prenotazione.id, prenotazione.codice_fiscale, prenotazione.data, prenotazione.codice, 
         prenotazione.eseguito, prenotazione.note, prenotazione.annullato, prenotazione.id_presidio 
         FROM presidio, prenotazione
-        WHERE presidio.nome = :nome_presidio AND presidio.id = prenotazione.id_presidio';
+        WHERE presidio.nome = :nome_presidio AND presidio.id = prenotazione.id_presidio AND prenotazione.annullato = false';
 $stmt = $pdo->prepare($sql);
 
 $stmt->execute(['nome_presidio'=>$nome_presidio]);
