@@ -1,9 +1,9 @@
-import React, {useContext, useReducer} from "react";
-import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result } from 'antd';
-import { UserOutlined, InfoCircleOutlined, CalendarTwoTone } from '@ant-design/icons';
+import React, {useContext, useReducer, useState, useEffect} from "react";
+import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result, Spin } from 'antd';
+import { UserOutlined, InfoCircleOutlined, CalendarOutlined } from '@ant-design/icons';
 import {PopUp, appear} from "../PopUp";
 import "../../assets/styles/prenota.css";
-import test from '../../serverPlaceholder.js';
+import test from '../../api.js';
 
 export default Prenota;
 
@@ -14,7 +14,8 @@ const INITIAL_CONTEXT = {
     day: null,
     presidio: null,
     prenoted: false,
-    prenotationCode: null
+    prenotationCode: null,
+    serverResponse: null
 };
 
 // TODO: resettare lo stato della prenotazione una volta chiuso il popup
@@ -24,7 +25,7 @@ function Prenota() {
 
 	return (
         <AppContext.Provider value={{ state, dispatch }} >
-            <Button shape="round" icon={<CalendarTwoTone />} size={'large'} 
+            <Button shape="round" icon={<CalendarOutlined />} size={'large'} type="primary" danger
             onClick={ () => appear(true, state.prenoted ? 'result-window' : 'prenota-window') } >
                 Prenota
             </Button>
@@ -35,26 +36,73 @@ function Prenota() {
 
 function Window() {
     const { state, dispatch } = useContext(AppContext);
-    var SelectedWindow = PrenotaWindow;
-    if (state?.prenoted) SelectedWindow = ResultWindow;
+    var SelectedWindow = PrenotePage;
+    if (state?.prenoted) SelectedWindow = ResultPage;
     return (
         <SelectedWindow context={AppContext} />
     )
 }
 
-function ResultWindow(){
+function ResultPage(){
+    const { state, dispatch } = useContext(AppContext);
+
+    if (!state.serverResponse) {
+        return (
+            <div className="result-window">
+                <Spin tip="Caricamento..." size="large" />
+            </div>
+        )
+    }
+
     return (
         <div className="result-window">
             <Result
                 status="success"
                 title="Prenotazione effettuata con successo!"
-                subTitle="Codice prenotazione: 8D923NIDA0DH9A Visualizza prenotazione" />
+                subTitle={`Codice prenotazione: ${state.serverResponse.dati.codice}`} />
         </div>
     )
 }
 
-function PrenotaWindow() {
+function PrenotePage() {
     const { state, dispatch } = useContext(AppContext);
+    const [presidi, setPresidi] = useState(null);
+
+    useEffect(() => {
+        fetch('http://localhost/tamponi/get/all_rpp.php')
+        .then(b=>b.json())
+        .then((data) => {
+                var options = [];
+                // una volta ottenuti i dati li formatto
+                data.dati.forEach((regione, i) => {
+                    options[i] = {
+                        value: regione.id,
+                        label: regione.nome,
+                        children: []
+                    }
+                    
+                    regione.province.forEach((provincia, j) => {
+                        options[i].children[j] = {
+                            value: provincia.id,
+                            label: provincia.nome,
+                            children: []
+                        }
+                        
+                        provincia.presidi.forEach((presidio, k) => {
+                            options[i].children[j].children[k] = {
+                                value: presidio.id,
+                                label: presidio.nome
+                            }
+                        })
+                    })
+                });
+
+                setPresidi(options);
+            }
+        );
+    });
+
+
     const layout = {
         labelCol: { span: 8 },
         wrapperCol: { span: 16 },
@@ -72,10 +120,24 @@ function PrenotaWindow() {
 
         const onFinish = (values) => {
             console.log('Success:', values);
+
             dispatch({type: 'user', payload: values.code});
             dispatch({type: 'day', payload: values.day});
             dispatch({type: 'presidio', payload: values.presidio});
-            dispatch({type: 'prenoted', payload: true})
+            dispatch({type: 'prenoted', payload: true});
+
+            values.presidio = {
+                regione: parseInt(values.presidio[0]), 
+                provincia: parseInt(values.presidio[1]), 
+                presidio: parseInt(values.presidio[2])
+            }
+
+            inviaDati({
+                "user": values.code,
+                "day": '2021-05-12',
+                "presidio": values.presidio
+            }).then(data => dispatch({type: 'server-response', payload: data}));
+
         };
         
         const onFinishFailed = (errorInfo) => {
@@ -83,16 +145,35 @@ function PrenotaWindow() {
         };
 
         const disabledDate = (current) => {
-            var dateVietate = [new Date('05/22/2021').valueOf(), new Date('05/26/2021').valueOf()];
+            let valoreCurrent = current.valueOf();
+            current = current._d;
 
-            /* var data = `${current.getDate()}/${current.day() - 1}/${current.year()}`; */
+            var dateVietate = [new Date('2021-05-10'), new Date('2021-05-25')];
 
-            /* console.log(new Date(data)) */
+            const twoDigits = (number) => {
+                return (number < 10 ? '0' : '') + number;
+            };
 
-            /* console.log(current.format('YYYY/MM/DD').valueOf() == dateVietate[0], current.format('YYYY/MM/DD').valueOf() == dateVietate[1]); */
-            /* console.log(data); */
-            var condizioni = current.valueOf() < Date.now();
-            // Can not select days before today and today
+            let day = twoDigits(current.getDate());
+            let month = twoDigits((current.getMonth()%11) + 1);
+            let year = current.getFullYear();
+
+            current = `${year}-${month}-${day}`;
+
+            let flag = false;
+
+            for (let i=0;  i < dateVietate.length && !flag; i++){
+                let dayTemp = twoDigits(dateVietate[i].getDate());
+                let monthTemp = twoDigits((dateVietate[i].getMonth()%11) + 1);
+                let yearTemp = dateVietate[i].getFullYear();
+                let textTemp = `${yearTemp}-${monthTemp}-${dayTemp}`;
+
+                flag = current == textTemp;
+            }
+
+            // Can not select days before today and the forbidden days
+            var condizioni = valoreCurrent < Date.now() || flag;
+
             return condizioni;
         }
 
@@ -141,7 +222,7 @@ function PrenotaWindow() {
                     },
                     ]}
                 >
-                    <Cascader options={getPresidi()} placeholder="Seleziona il presidio" /* prefix={<HomeOutlined />} */ />
+                    <Cascader options={presidi} placeholder="Seleziona il presidio" /* prefix={<HomeOutlined />} */ />
                 </Form.Item>
 
                 <Form.Item
@@ -154,7 +235,7 @@ function PrenotaWindow() {
                     },
                     ]}
                 >
-                    <DatePicker onChange={handleChange} format="DD/MM/YYYY" disabledDate={disabledDate} />
+                    <DatePicker onChange={handleChange} disabledDate={disabledDate} />
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
@@ -165,58 +246,6 @@ function PrenotaWindow() {
             </Form>
         </div>
     )
-}
-
-function getPresidi() {
-    var presidi;
-    var options = [];
-
-    /* fetch('./presidi.json', {
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-            }
-        }
-    )
-    .then(b => b.json())
-    .then(dati => {
-            presidi = dati;
-            console.log(presidi);
-        }
-    ) */
-
-    presidi = test.getPresidi()
-
-    // una volta ottenuti i dati li formatto
-    presidi.forEach((regione, i) => {
-        options[i] = {
-            value: regione.regione,
-            label: regione.regione,
-            children: []
-        }
-
-        regione.province.forEach((provincia, j) => {
-            options[i].children[j] = {
-                value: provincia.provincia,
-                label: provincia.provincia,
-                children: []
-            }
-
-            provincia.presidi.forEach((presidio, k) => {
-                options[i].children[j].children[k] = {
-                    value: presidio,
-                    label: presidio
-                }
-            })
-        })
-
-    })
-
-    return options;
 }
 
 function reducer(state, action) {
@@ -232,18 +261,31 @@ function reducer(state, action) {
             }
             break;
         case 'day':
+            console.log(action.payload);
+
+            const twoDigits = (number) => {
+                return (number < 10 ? '0' : '') + number;
+            };
+
+            let date = action.payload._d;
+            let day = twoDigits(date.getDate());
+            let month = twoDigits((date.getMonth()%11) + 1);
+            let year = date.getFullYear();
+
+            date = `${year}-${month}-${day}`;
+
             newState = {
                 ...state,
-                day: action.payload
+                day: date
             }
             break;
         case 'presidio':
             newState = {
                 ...state,
                 presidio: {
-                    regione: action.payload[0], 
-                    provincia: action.payload[1], 
-                    presidio: action.payload[2]
+                    regione: parseInt(action.payload[0]), 
+                    provincia: parseInt(action.payload[1]), 
+                    presidio: parseInt(action.payload[2])
                 }
             }
             break;
@@ -253,9 +295,29 @@ function reducer(state, action) {
                 prenoted: action.payload
             }
             break;
+        case 'server-response':
+                newState = {
+                    ...state,
+                    serverResponse: action.payload
+                }
+                break;
         default:
 			break;
 	}
     console.log(newState);
 	return newState;
+}
+
+async function inviaDati(data) {
+    console.log(data);
+    const response = await fetch('http://localhost/tamponi/prenotazioni/prenota.php', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+
+    return response.json();
 }
