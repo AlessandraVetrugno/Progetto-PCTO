@@ -1,13 +1,14 @@
 import React from "react";
 import { Redirect, Link } from "react-router-dom";
-import "../../assets/styles/home.css";
-import BannerImage from "url:../../assets/img/banner.png";
+import "../assets/styles/template.css";
+/* import GitHubIcon from '@material-ui/icons/GitHub'; */
+import BannerImage from "url:../assets/img/banner.png";
 
-function HomePage() {
+function Template({component: ComponentJSX}) {
 	return (
 		<>
 			<NavBar />
-			<Content />
+			<Content component={ComponentJSX}/>
 			<Footer />
 		</>
 	);
@@ -15,15 +16,15 @@ function HomePage() {
 
 function NavBar() {
 	return (
-		<div className="navbar">
-			<img src={BannerImage} />
-		</div>
+		<header className="navbar">
+			<img className="banner" src={BannerImage}/>
+		</header>
 	);
 }
 
 function Footer() {
 	return (
-		<div className="footer">
+		<footer className="footer">
 			<div className="copyright-container">
 				<i className="far fa-copyright" aria-hidden="true"></i>
 				<div className="autori">
@@ -34,19 +35,20 @@ function Footer() {
 					<p>Vetrugno Alessandra</p>
 				</div>
 			</div>
+			{/* <GitHubIcon className="icon-github" /> */}
 			<a href="https://github.com/NizarNadif/prenotazioni" target="_blank">
 				<i className="fab fa-github" aria-hidden="true"></i>
 			</a>
-		</div>
+		</footer>
 	);
 }
 
-function Content() {
+function Content({component: ComponentJSX}) {
 	return (
 		<div className="content">
-			questo è il contenuto della pagina
+				<ComponentJSX props/>
 		</div>
 	);
 }
 
-export default HomePage;
+export default Template;

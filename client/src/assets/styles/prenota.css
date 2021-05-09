@@ -1,0 +1,12 @@
+.prenota-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.prenota-window-prima {
+    display: flex;
+    flex-direction: column;
+    
+}
