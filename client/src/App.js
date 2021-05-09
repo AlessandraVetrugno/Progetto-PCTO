@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Switch, Route, Link, Redirect } from "react-router-dom";
-import HomePage from "./components/home/HomePage";
+import Home from "./components/home/Home";
 import PrivateRoute from "./components/PrivateRoute";
 
 export function App() {
@@ -9,8 +9,8 @@ export function App() {
 		<>
 			<BrowserRouter>
 				<Switch>
-					<Route exact path="/" component={HomePage} />
-					<PrivateRoute exact path="/test-privato" component={HomePage} />
+					<Route exact path="/" component={Home} />
+					<PrivateRoute exact path="/test-privato" component={Home} />
 				</Switch>
 			</BrowserRouter>
 		</>
