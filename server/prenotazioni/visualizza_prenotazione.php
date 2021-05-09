@@ -22,6 +22,7 @@ $stmt->execute([
     'codice'=>$codice_prenotazione
 ]);
 $dati = $stmt->fetch();
+
 if($dati != null){
   $response['prenotazione'] = $dati;
   $response['status'] = 1;
