@@ -1,6 +1,6 @@
 import React, {useContext, useReducer, useState, useEffect} from "react";
-import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result, Spin } from 'antd';
-import { UserOutlined, InfoCircleOutlined, CalendarOutlined } from '@ant-design/icons';
+import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result } from 'antd';
+import { UserOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import {PopUp, appear} from "../PopUp";
 import "../../assets/styles/prenota.css";
 import test from '../../api.js';
@@ -14,8 +14,7 @@ const INITIAL_CONTEXT = {
     day: null,
     presidio: null,
     prenoted: false,
-    prenotationCode: null,
-    serverResponse: null
+    prenotationCode: null
 };
 
 // TODO: resettare lo stato della prenotazione una volta chiuso il popup
@@ -25,9 +24,10 @@ function Prenota() {
 
 	return (
         <AppContext.Provider value={{ state, dispatch }} >
-            <Button shape="round" icon={<CalendarOutlined />} size={'large'} type="primary" danger
+            <Button shape="round" icon={<UserOutlined />} size={'large'} 
+            style={{ backgroundColor: '#52c41a', color: 'white'}}
             onClick={ () => appear(true, state.prenoted ? 'result-window' : 'prenota-window') } >
-                Prenota
+                Area riservata
             </Button>
             <PopUp component={<Window context={AppContext}/>} />
         </AppContext.Provider>
@@ -36,35 +36,25 @@ function Prenota() {
 
 function Window() {
     const { state, dispatch } = useContext(AppContext);
-    var SelectedWindow = PrenotePage;
-    if (state?.prenoted) SelectedWindow = ResultPage;
+    var SelectedWindow = PrenotaWindow;
+    if (state?.prenoted) SelectedWindow = ResultWindow;
     return (
         <SelectedWindow context={AppContext} />
     )
 }
 
-function ResultPage(){
-    const { state, dispatch } = useContext(AppContext);
-
-    if (!state.serverResponse) {
-        return (
-            <div className="result-window">
-                <Spin tip="Caricamento..." size="large" />
-            </div>
-        )
-    }
-
+function ResultWindow(){
     return (
         <div className="result-window">
             <Result
                 status="success"
                 title="Prenotazione effettuata con successo!"
-                subTitle={`Codice prenotazione: ${state.serverResponse.dati.codice}`} />
+                subTitle="Codice prenotazione: 8D923NIDA0DH9A Visualizza prenotazione" />
         </div>
     )
 }
 
-function PrenotePage() {
+function PrenotaWindow() {
     const { state, dispatch } = useContext(AppContext);
     const [presidi, setPresidi] = useState(null);
 
@@ -126,17 +116,7 @@ function PrenotePage() {
             dispatch({type: 'presidio', payload: values.presidio});
             dispatch({type: 'prenoted', payload: true});
 
-            values.presidio = {
-                regione: parseInt(values.presidio[0]), 
-                provincia: parseInt(values.presidio[1]), 
-                presidio: parseInt(values.presidio[2])
-            }
-
-            inviaDati({
-                "user": values.code,
-                "day": '2021-05-12',
-                "presidio": values.presidio
-            }).then(data => dispatch({type: 'server-response', payload: data}));
+            dispatch({type: 'push-data', payload: true});
 
         };
         
@@ -145,35 +125,16 @@ function PrenotePage() {
         };
 
         const disabledDate = (current) => {
-            let valoreCurrent = current.valueOf();
-            current = current._d;
+            var dateVietate = [new Date('05/22/2021').valueOf(), new Date('05/26/2021').valueOf()];
 
-            var dateVietate = [new Date('2021-05-10'), new Date('2021-05-25')];
+            /* var data = `${current.getDate()}/${current.day() - 1}/${current.year()}`; */
 
-            const twoDigits = (number) => {
-                return (number < 10 ? '0' : '') + number;
-            };
+            /* console.log(new Date(data)) */
 
-            let day = twoDigits(current.getDate());
-            let month = twoDigits((current.getMonth()%11) + 1);
-            let year = current.getFullYear();
-
-            current = `${year}-${month}-${day}`;
-
-            let flag = false;
-
-            for (let i=0;  i < dateVietate.length && !flag; i++){
-                let dayTemp = twoDigits(dateVietate[i].getDate());
-                let monthTemp = twoDigits((dateVietate[i].getMonth()%11) + 1);
-                let yearTemp = dateVietate[i].getFullYear();
-                let textTemp = `${yearTemp}-${monthTemp}-${dayTemp}`;
-
-                flag = current == textTemp;
-            }
-
-            // Can not select days before today and the forbidden days
-            var condizioni = valoreCurrent < Date.now() || flag;
-
+            /* console.log(current.format('YYYY/MM/DD').valueOf() == dateVietate[0], current.format('YYYY/MM/DD').valueOf() == dateVietate[1]); */
+            /* console.log(data); */
+            var condizioni = current.valueOf() < Date.now();
+            // Can not select days before today and today
             return condizioni;
         }
 
@@ -295,12 +256,13 @@ function reducer(state, action) {
                 prenoted: action.payload
             }
             break;
-        case 'server-response':
-                newState = {
-                    ...state,
-                    serverResponse: action.payload
-                }
-                break;
+        case 'push-data':
+            inviaDati({
+                user: newState.user,
+                day: newState.day,
+                presidio: newState.presidio
+            })
+            break;
         default:
 			break;
 	}
@@ -309,15 +271,16 @@ function reducer(state, action) {
 }
 
 async function inviaDati(data) {
-    console.log(data);
-    const response = await fetch('http://localhost/tamponi/prenotazioni/prenota.php', {
+    console.log('dati:', data, '\ndati injasoniti:', JSON.stringify(data));
+    var response = await fetch('http://localhost:80/tamponi/prenotazioni/prenota.php', {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
+        mode: 'no-cors', // no-cors, *cors, same-origin
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
 
-    return response.json();
+    console.log(response.json());
 }
