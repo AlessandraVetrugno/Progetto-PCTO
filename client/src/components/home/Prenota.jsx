@@ -171,7 +171,7 @@ function PrenotePage() {
                 flag = current == textTemp;
             }
 
-            // Can not select days before today and the forbidden days
+            // Can't select days before today and the forbidden days
             var condizioni = valoreCurrent < Date.now() || flag;
 
             return condizioni;
@@ -302,7 +302,7 @@ function reducer(state, action) {
                 }
                 break;
         default:
-			break;
+		break;
 	}
     console.log(newState);
 	return newState;
