@@ -3,7 +3,7 @@ import '../assets/styles/popup.css';
 
 export function PopUp({ component: ComponentJSX }) {
 	return (
-		<div className="popup hidden">
+		<div className="popup no-blur hidden">
 			{ComponentJSX}
             <CloseBtn />
 		</div>
@@ -34,7 +34,7 @@ function CloseBtn(){
     )
 }
 
-export function appear(doBlur, popupClass, classesToBlur = ['navbar', 'footer']) {
+export function appear(doBlur, popupClass, classesToBlur = ['navbar', 'footer', 'button-bar', 'carosello']) {
 	classesToBlur.forEach((classToBlur) => {
 		let elements = document.getElementsByClassName(classToBlur);
 		for (let i = 0; i < elements.length; i++){
@@ -46,6 +46,11 @@ export function appear(doBlur, popupClass, classesToBlur = ['navbar', 'footer'])
 
 	const popupClasses = document.getElementsByClassName(popupClass)[0].parentNode.classList;
 
-    if (doBlur) popupClasses.remove('hidden');
-    else popupClasses.add('hidden');
+    if (doBlur) {
+        popupClasses.remove('hidden');
+    }
+    else {
+        popupClasses.add('hidden');
+
+    }
 }
