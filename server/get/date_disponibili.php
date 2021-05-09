@@ -18,12 +18,13 @@ include_once '../config.php';
 
 //query
 $sql= "SELECT prenotazione.data, COUNT(*) AS n_prenotazioni
-       FROM prenotazione, presidio, provincia, regione
-       WHERE prenotazione.data >= CURDATE() AND presidio.nome = :nome_presidio
-            AND presidio.id_provincia = provincia.id AND provincia.nome = :nome_provincia
-            AND provincia.id_regione = regione.id AND regione.nome = :nome_regione
-       GROUP BY prenotazione.data
-       ORDER BY prenotazione.data ASC";
+FROM prenotazione, presidio, provincia, regione
+WHERE prenotazione.data >= CURDATE() AND presidio.nome = :nome_presidio
+  AND presidio.id_provincia = provincia.id AND provincia.nome = :nome_provincia
+  AND provincia.id_regione = regione.id AND regione.nome = :nome_regione
+GROUP BY prenotazione.data
+HAVING n_prenotazioni > 5
+ORDER BY prenotazione.data ASC";
 
 //preparo la query
 $stmt = $pdo->prepare($sql);
