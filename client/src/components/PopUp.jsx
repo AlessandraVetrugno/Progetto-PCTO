@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import '../assets/styles/popup.css';
 
-export function PopUp({ component: ComponentJSX }) {
+export function PopUp({ component: ComponentJSX, ...props }) {
+
 	return (
 		<div className="popup no-blur hidden">
 			{ComponentJSX}
@@ -11,25 +12,10 @@ export function PopUp({ component: ComponentJSX }) {
 }
 
 function CloseBtn(){
-    const [popupClass, setClass] = useState(null);
-
-    useEffect(() => {
-        var popups = document.getElementsByClassName('popup');
-
-        // lo converto in un array
-        popups = Object.entries(popups);
-
-        // mantengo solo quelli visibili
-        popups.filter(popup => {return !popup?.classList.includes('hidden')});
-
-        var popup = popups[0][1].childNodes[0];
-
-        setClass(popup.classList[0]);
-    })
     return (
         <i 
             className="fas fa-times popup-close" 
-            onClick={ () => { appear(false, popupClass) } }
+            onClick={ () => { appear(false) } }
             aria-hidden="true" />
     )
 }
@@ -43,16 +29,20 @@ export function appear(doBlur, popupClass, classesToBlur = ['navbar', 'footer', 
             else elements[i].classList.remove("blur");
         }
 	});
-
-	const popupClasses = document.getElementsByClassName(popupClass)[0].parentNode.classList;
-
+    
     if (doBlur) {
+        // rendo visibile il popup chiamato
+        const popupClasses = document.getElementsByClassName(popupClass)[0].parentNode.classList;
         popupClasses.remove('hidden');
         document.getElementById('app').classList.add('unscrollable');
     }
     else {
-        popupClasses.add('hidden');
-        document.getElementById('app').classList.remove('unscrollable');
+        // nascondo tutti i popup
+        let popups = document.getElementsByClassName('popup');
+        for (let popup of popups)
+            popup.classList.add('hidden');
 
+        // e rendo la pagina scorribile
+        document.getElementById('app').classList.remove('unscrollable');
     }
 }
