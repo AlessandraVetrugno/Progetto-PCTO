@@ -1,11 +1,10 @@
 import React, {useContext, useReducer, useState, useEffect} from "react";
 import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result } from 'antd';
-import { UserOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { UserOutlined, InfoCircleOutlined, InfoCircleTwoTone  } from '@ant-design/icons';
 import {PopUp, appear} from "../PopUp";
-import "../../assets/styles/prenota.css";
 import test from '../../api.js';
 
-export default Prenota;
+export default Accedi;
 
 const AppContext = React.createContext(null);
 
@@ -17,16 +16,14 @@ const INITIAL_CONTEXT = {
     prenotationCode: null
 };
 
-// TODO: resettare lo stato della prenotazione una volta chiuso il popup
-
-function Prenota() {
+function Accedi() {
     const [state, dispatch] = useReducer(reducer, INITIAL_CONTEXT);
 
 	return (
         <AppContext.Provider value={{ state, dispatch }} >
-            <Button shape="round" icon={<UserOutlined />} size={'large'} 
+            <Button shape="round" icon={<UserOutlined />} size={'large'} className="btn-home"
             style={{ backgroundColor: '#52c41a', color: 'white'}}
-            onClick={ () => appear(true, state.prenoted ? 'result-window' : 'prenota-window') } >
+            onClick={ () => appear(true, state.prenoted ? 'result-window' : 'accedi-window') } >
                 Area riservata
             </Button>
             <PopUp component={<Window context={AppContext}/>} />
@@ -36,7 +33,7 @@ function Prenota() {
 
 function Window() {
     const { state, dispatch } = useContext(AppContext);
-    var SelectedWindow = PrenotaWindow;
+    var SelectedWindow = AccediWindow;
     if (state?.prenoted) SelectedWindow = ResultWindow;
     return (
         <SelectedWindow context={AppContext} />
@@ -45,52 +42,17 @@ function Window() {
 
 function ResultWindow(){
     return (
-        <div className="result-window">
+        <div className="result-window window">
             <Result
                 status="success"
                 title="Prenotazione effettuata con successo!"
-                subTitle="Codice prenotazione: 8D923NIDA0DH9A Visualizza prenotazione" />
+                subTitle="Codice prenotazione: 8D923NIDA0DH9A Accedi prenotazione" />
         </div>
     )
 }
 
-function PrenotaWindow() {
+function AccediWindow() {
     const { state, dispatch } = useContext(AppContext);
-    const [presidi, setPresidi] = useState(null);
-
-    useEffect(() => {
-        fetch('http://localhost/tamponi/get/all_rpp.php')
-        .then(b=>b.json())
-        .then((data) => {
-                var options = [];
-                // una volta ottenuti i dati li formatto
-                data.dati.forEach((regione, i) => {
-                    options[i] = {
-                        value: regione.id,
-                        label: regione.nome,
-                        children: []
-                    }
-                    
-                    regione.province.forEach((provincia, j) => {
-                        options[i].children[j] = {
-                            value: provincia.id,
-                            label: provincia.nome,
-                            children: []
-                        }
-                        
-                        provincia.presidi.forEach((presidio, k) => {
-                            options[i].children[j].children[k] = {
-                                value: presidio.id,
-                                label: presidio.nome
-                            }
-                        })
-                    })
-                });
-
-                setPresidi(options);
-            }
-        );
-    });
 
 
     const layout = {
@@ -102,45 +64,18 @@ function PrenotaWindow() {
         wrapperCol: { offset: 8, span: 16 },
     };
 
-    let mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
-        const handleChange = value => {
-            var month = mesi[parseInt(value.format('MM'))];
-            message.success(`Data scelta: ${value ? value.format(`DD ${month} YYYY`) : 'None'}`);
-        };
+    const onFinish = (values) => {
+        console.log('Success:', values);
 
-        const onFinish = (values) => {
-            console.log('Success:', values);
-
-            dispatch({type: 'user', payload: values.code});
-            dispatch({type: 'day', payload: values.day});
-            dispatch({type: 'presidio', payload: values.presidio});
-            dispatch({type: 'prenoted', payload: true});
-
-            dispatch({type: 'push-data', payload: true});
-
-        };
-        
-        const onFinishFailed = (errorInfo) => {
-            console.log('Failed:', errorInfo);
-        };
-
-        const disabledDate = (current) => {
-            var dateVietate = [new Date('05/22/2021').valueOf(), new Date('05/26/2021').valueOf()];
-
-            /* var data = `${current.getDate()}/${current.day() - 1}/${current.year()}`; */
-
-            /* console.log(new Date(data)) */
-
-            /* console.log(current.format('YYYY/MM/DD').valueOf() == dateVietate[0], current.format('YYYY/MM/DD').valueOf() == dateVietate[1]); */
-            /* console.log(data); */
-            var condizioni = current.valueOf() < Date.now();
-            // Can not select days before today and today
-            return condizioni;
-        }
+    };
+    
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
 
     return(
-        <div className="prenota-window">
-            <h3>Prenota un tampone</h3>
+        <div className="accedi-window window">
+            <h3>Accedi</h3>
             <Form
                 name="basic"
                 initialValues={{
@@ -174,29 +109,25 @@ function PrenotaWindow() {
                 </Form.Item>
 
                 <Form.Item
-                    label="Presidio"
-                    name="presidio"
+                    label="Codice prenotazione"
+                    name="codicePrenotazione"
                     rules={[
                     {
                         required: true, 
-                        message: 'Presidio non selezionato!',
+                        message: 'Codice prenotazione non inserito!',
                     },
                     ]}
                 >
-                    <Cascader options={presidi} placeholder="Seleziona il presidio" /* prefix={<HomeOutlined />} */ />
-                </Form.Item>
-
-                <Form.Item
-                    label="Giorno"
-                    name="day"
-                    rules={[
-                    {
-                        required: true, 
-                        message: 'Giorno non selezionato!',
-                    },
-                    ]}
-                >
-                    <DatePicker onChange={handleChange} disabledDate={disabledDate} />
+                    <Input 
+                        placeholder="codice prenotazione" 
+                        maxLength={16}
+                        prefix={<UserOutlined />} 
+                        suffix={
+                            <Tooltip title="è necessario inserire il codice della prenotazione per poter prenotare un tampone">
+                                <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
+                            </Tooltip>
+                        }
+                    />
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
@@ -268,19 +199,4 @@ function reducer(state, action) {
 	}
     console.log(newState);
 	return newState;
-}
-
-async function inviaDati(data) {
-    console.log('dati:', data, '\ndati injasoniti:', JSON.stringify(data));
-    var response = await fetch('http://localhost:80/tamponi/prenotazioni/prenota.php', {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
-        headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
-
-    console.log(response.json());
 }

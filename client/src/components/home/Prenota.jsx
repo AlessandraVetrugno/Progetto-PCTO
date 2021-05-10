@@ -1,8 +1,8 @@
 import React, {useContext, useReducer, useState, useEffect} from "react";
 import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result, Spin } from 'antd';
 import { UserOutlined, InfoCircleOutlined, CalendarOutlined } from '@ant-design/icons';
+import QRCode from "qrcode.react";
 import {PopUp, appear} from "../PopUp";
-import "../../assets/styles/prenota.css";
 import test from '../../api.js';
 
 export default Prenota;
@@ -23,9 +23,14 @@ const INITIAL_CONTEXT = {
 function Prenota() {
     const [state, dispatch] = useReducer(reducer, INITIAL_CONTEXT);
 
+    const btnStyle = {
+        color: 'white',
+        background: '#EA1A1A'
+    }
+
 	return (
         <AppContext.Provider value={{ state, dispatch }} >
-            <Button shape="round" icon={<CalendarOutlined />} size={'large'} type="primary" danger
+            <Button shape="round" className="btn-home" icon={<CalendarOutlined />} danger type="primary" size={'large'}
             onClick={ () => appear(true, state.prenoted ? 'result-window' : 'prenota-window') } >
                 Prenota
             </Button>
@@ -48,18 +53,19 @@ function ResultPage(){
 
     if (!state.serverResponse) {
         return (
-            <div className="result-window">
+            <div className="result-window window">
                 <Spin tip="Caricamento..." size="large" />
             </div>
         )
     }
 
     return (
-        <div className="result-window">
+        <div className="result-window window">
             <Result
                 status="success"
                 title="Prenotazione effettuata con successo!"
                 subTitle={`Codice prenotazione: ${state.serverResponse.dati.codice}`} />
+            <QRCode value={state.serverResponse.dati.codice} />
         </div>
     )
 }
@@ -69,7 +75,13 @@ function PrenotePage() {
     const [presidi, setPresidi] = useState(null);
 
     useEffect(() => {
-        fetch('http://localhost/tamponi/get/all_rpp.php')
+        fetch('http://localhost/tamponi/get/all_rpp.php', {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, *cors, same-origin
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        })
         .then(b=>b.json())
         .then((data) => {
                 var options = [];
@@ -178,7 +190,7 @@ function PrenotePage() {
         }
 
     return(
-        <div className="prenota-window">
+        <div className="prenota-window window">
             <h3>Prenota un tampone</h3>
             <Form
                 name="basic"
