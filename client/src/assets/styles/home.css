@@ -11,17 +11,31 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
-    padding: 0 30px;
+    padding: 0 60px;
+}
+
+.btn-home:hover {
+    transform: scale(1.05);
 }
 
 .img-carosello {
-    height: 160px;
     color: white;
-    line-height: 160px;
     text-align: center;
     background: #364d79;
+    align-self: center;
+    height: 500px;
+    /* height: auto; */
 }
 
 .carosello {
-    margin: 20px;
+    padding: 50px;
+}
+
+
+.window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    user-select:  none;
 }
