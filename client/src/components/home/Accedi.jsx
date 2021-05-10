@@ -2,7 +2,6 @@ import React, {useContext, useReducer, useState, useEffect} from "react";
 import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result } from 'antd';
 import { UserOutlined, InfoCircleOutlined, InfoCircleTwoTone  } from '@ant-design/icons';
 import {PopUp, appear} from "../PopUp";
-import "../../assets/styles/prenota.css";
 import test from '../../api.js';
 
 export default Accedi;
