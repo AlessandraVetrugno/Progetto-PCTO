@@ -1,9 +1,11 @@
 import React, {useContext, useReducer, useState, useEffect} from "react";
-import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result, Spin } from 'antd';
+import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result, Spin, Typography } from 'antd';
 import { UserOutlined, InfoCircleOutlined, CalendarOutlined } from '@ant-design/icons';
 import QRCode from "qrcode.react";
 import {PopUp, appear} from "../PopUp";
 import test from '../../api.js';
+
+const { Paragraph } = Typography;
 
 export default Prenota;
 
@@ -64,8 +66,13 @@ function ResultPage(){
             <Result
                 status="success"
                 title="Prenotazione effettuata con successo!"
-                subTitle={`Codice prenotazione: ${state.serverResponse.dati.codice}`} />
-            <QRCode value={state.serverResponse.dati.codice} />
+                subTitle={`Codice prenotazione: ${state.serverResponse.dati.codice}`} 
+                extra={[
+                    <Paragraph copyable level={3}>{state.serverResponse.dati.codice}</Paragraph>,
+                    <QRCode value={state.serverResponse.dati.codice} />
+                ]} />
+                
+            
         </div>
     )
 }
