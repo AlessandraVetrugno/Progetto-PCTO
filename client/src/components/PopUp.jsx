@@ -48,9 +48,11 @@ export function appear(doBlur, popupClass, classesToBlur = ['navbar', 'footer', 
 
     if (doBlur) {
         popupClasses.remove('hidden');
+        document.getElementById('app').classList.add('unscrollable');
     }
     else {
         popupClasses.add('hidden');
+        document.getElementById('app').classList.remove('unscrollable');
 
     }
 }
