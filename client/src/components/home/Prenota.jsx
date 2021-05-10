@@ -34,7 +34,7 @@ function Prenota() {
             onClick={ () => appear(true, state.prenoted ? 'result-window' : 'prenota-window') } >
                 Prenota
             </Button>
-            <PopUp component={<Window context={AppContext}/>} />
+            <PopUp component={<Window context={AppContext}/>} style={{height: '600px'}} />
         </AppContext.Provider>
 	);
 }

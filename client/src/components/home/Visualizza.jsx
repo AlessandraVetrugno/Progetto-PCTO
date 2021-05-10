@@ -25,7 +25,7 @@ function Visualizza() {
             onClick={ () => appear(true, state.prenoted ? 'result-window' : 'visualizza-window') } >
                 Visualizza una prenotazione
             </Button>
-            <PopUp component={<Window context={AppContext}/>} />
+            <PopUp component={<Window context={AppContext}/>} style={{height: '600px'}} />
         </AppContext.Provider>
 	);
 }
@@ -55,12 +55,12 @@ function VisualizzaWindow() {
 
 
     const layout = {
-        labelCol: { span: 8 },
+        labelCol: { span: 10 },
         wrapperCol: { span: 16 },
     };
 
     const tailLayout = {
-        wrapperCol: { offset: 8, span: 16 },
+        wrapperCol: { offset: 10, span: 16 },
     };
 
     const onFinish = (values) => {

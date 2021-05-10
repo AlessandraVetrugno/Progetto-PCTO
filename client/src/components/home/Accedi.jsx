@@ -26,7 +26,7 @@ function Accedi() {
             onClick={ () => appear(true, state.prenoted ? 'result-window' : 'accedi-window') } >
                 Area riservata
             </Button>
-            <PopUp component={<Window context={AppContext}/>} />
+            <PopUp component={<Window context={AppContext}/>} style={{height: '600px'}} />
         </AppContext.Provider>
 	);
 }

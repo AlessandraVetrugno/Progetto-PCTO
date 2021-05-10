@@ -4,7 +4,7 @@ import '../assets/styles/popup.css';
 export function PopUp({ component: ComponentJSX, ...props }) {
 
 	return (
-		<div className="popup no-blur hidden">
+		<div className="popup no-blur hidden" style={props?.style}>
 			{ComponentJSX}
             <CloseBtn />
 		</div>
