@@ -21,6 +21,11 @@ $pdo = new PDO($dsn, $user, $pass);
 // trasforma tutti gli errori SQL in eccezioni PHP
 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+// permetto ai client di fare qualsiasi tipo di richiesta
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Credentials: true");
+
 session_start();
 
 // funzioni usate frequentemente (si potrebbero anche mettere in un file 'scripts' ed includerlo
