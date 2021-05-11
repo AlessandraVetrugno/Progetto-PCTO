@@ -1,0 +1,13 @@
+.annulla-check-button-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.annulla-check-button-bar > * {
+    margin: 50px;
+}
+
+.annulla-check-window {
+    margin: 50px;
+}

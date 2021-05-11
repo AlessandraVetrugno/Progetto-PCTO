@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
-import "../../assets/styles/home.css";
 import Template from '../Template';
+import Annulla from './Annulla';
 import { Descriptions } from 'antd';
+import "../../assets/styles/prenotazione.css";
 
 export default Prenotazione;
 
@@ -32,6 +33,10 @@ function Content() {
 			<pre>
 				{JSON.stringify(prenotazione)}
 			</pre>
+			{
+				(!parseInt(prenotazione?.annullato) && !parseInt(prenotazione?.eseguito)) ?
+					<Annulla prenotazione={prenotazione} /> : <></>
+			}
 		</div>
 	);
 }
