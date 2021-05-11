@@ -20,7 +20,7 @@ function CloseBtn(){
     )
 }
 
-export function appear(doBlur, popupClass, classesToBlur = ['navbar', 'footer', 'button-bar', 'carosello']) {
+export function appear(doBlur, popupClass, classesToBlur = ['navbar', 'footer', 'button-bar', 'carosello', 'gestionale-prenotazione']) {
 	classesToBlur.forEach((classToBlur) => {
 		let elements = document.getElementsByClassName(classToBlur);
 		for (let i = 0; i < elements.length; i++){

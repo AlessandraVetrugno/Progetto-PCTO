@@ -1,6 +1,7 @@
 export default {
 	getPresidi,
-	getPrenotazione
+	getPrenotazione,
+    annullaPrenotazione
 };
 
 function getPresidi (callback) { 
@@ -68,4 +69,19 @@ function getPrenotazione (callback, data) {
                 callback(res);
             }
         );
+}
+
+async function annullaPrenotazione(codice) {
+    const data = {codice_prenotazione: codice};
+    /* fetch(process.env.REACT_APP_PRENOTAZIONE_ANNULLA) */
+    const response = await fetch('http://localhost/tamponi/prenotazioni/annulla_prenotazione.php', {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+
+    return response.json();
 }
