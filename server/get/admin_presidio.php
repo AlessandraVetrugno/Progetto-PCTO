@@ -1,8 +1,12 @@
 <?php
  include_once '../config.php';
 
+ $response = array();
+ $response['status'] = 0;
+
+ $req_data = $_GET;
  //prendo il codice dell'amministratore dall'array get
- $credenziali = $_GET['credenziali'];
+ $credenziali = $req_data['credenziali'];
 
  $sql = 'SELECT id, username, codice, id_presidio
          FROM amministratore_presidio
@@ -16,5 +20,9 @@
      'codice'=>$credenziali,
      'username'=>$credenziali
      ]);
-
- echo json_encode($stmt->fetch());
+ $dati = $stmt -> fetch(PDO::FETCH_ASSOC);
+if($dati != null) {
+    $response['dati'] = $dati;
+    $response['status'] = 1;
+}
+ echo json_encode($response);

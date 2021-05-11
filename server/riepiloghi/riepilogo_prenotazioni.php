@@ -6,9 +6,13 @@ include_once "../config.php";
 $response = array();
 $response['status'] = 0;
 
+
+$dati = file_get_contents("php://input");
+$dati = json_decode($dati, true);
+
 //variabili valorizzate tramite POST
-$giorno1 = $_POST['giorno1'];
-$giorno2 = $_POST['giorno2'];
+$giorno1 = $dati['giorno1'];
+$giorno2 = $dati['giorno2'];
 
 // query di inserimento preparata
 $sql = "SELECT prenotazione.data, COUNT(*) AS n_prenotazioni
@@ -24,7 +28,7 @@ $stmt -> execute([
     'giorno2'=>$giorno2
 ]);
 // estraggo le righe di risposta che finiranno come vettori
-$result = $stmt->fetchAll();
+$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if($result != null){
     $date = array_map('convertiDataMappa', $result);

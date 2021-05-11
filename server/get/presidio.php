@@ -2,9 +2,14 @@
 
 include_once '../config.php';
 
+$response = array();
+$response['status'] = 0;
+$dati = null;
+
+$req_data = $_GET;
 //prendo il nome del presidio, della provincia e della regione
-$nome_provincia = $_GET['provincia'];
-$nome_regione = $_GET['regione'];
+$nome_provincia = $req_data['provincia'];
+$nome_regione = $req_data['regione'];
 
 //se il nome della regione non è specificato esegui una ricerca per provincia e presidio
 if($nome_regione == null){
@@ -20,14 +25,15 @@ if($nome_regione == null){
     $stmt->execute([
         'nome_provincia'=>$nome_provincia
     ]);
-    echo json_encode($stmt->fetch());
+    $dati = $stmt->fetch(PDO::FETCH_ASSOC);
 
     //se anche il nome della provincia non è specificato allora fai una ricerca solo per presidio
 } else if($nome_provincia == null){
 
     $sql = 'SELECT presidio.nome FROM presidio';
     $stmt = $pdo -> query($sql);
-    echo json_encode($stmt->fetch());
+
+    $dati = $stmt->fetch(PDO::FETCH_ASSOC);
 
     //se tutti i parametri sono specificati allora fai una ricerca completa tra presidi, province e regioni
 } else {
@@ -41,5 +47,13 @@ if($nome_regione == null){
         'nome_provincia' => $nome_provincia,
         'nome_regione' => $nome_regione
     ]);
-    echo json_encode($stmt->fetch());
+
+    $dati = $stmt->fetch(PDO::FETCH_ASSOC);
 }
+
+if($dati != null){
+    $response['dati'] = $dati;
+    $response['status'] = 1;
+}
+
+echo json_encode($response);

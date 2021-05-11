@@ -4,7 +4,8 @@ include_once '../config.php';
 $response = array();
 $response['status'] = 0;
 
-$nome_presidio = $_GET['nome_presidio'];
+$req_data = $_GET;
+$nome_presidio = $req_data['nome_presidio'];
 
 //prendo tutte le prenotazioni di un presidio dato il nome
 $sql = 'SELECT prenotazione.id, prenotazione.codice_fiscale, prenotazione.data, prenotazione.codice, 
