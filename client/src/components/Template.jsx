@@ -17,7 +17,9 @@ function Template({component: ComponentJSX}) {
 function NavBar() {
 	return (
 		<header className="navbar">
-			<img className="banner" src={BannerImage}/>
+		<Link to="/">
+			<img className="banner" src={BannerImage} />
+		</Link>
 		</header>
 	);
 }

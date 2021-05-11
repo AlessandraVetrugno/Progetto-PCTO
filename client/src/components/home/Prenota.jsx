@@ -96,70 +96,85 @@ function PrenotePage() {
         wrapperCol: { offset: 8, span: 16 },
     };
 
-    let mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
-        const handleChange = value => {
-            var month = mesi[parseInt(value.format('MM'))];
-            message.success(`Data scelta: ${value ? value.format(`DD ${month} YYYY`) : 'None'}`);
-        };
+    const DateFormatted = data => {
+        console.log(data);
+		let mesi = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
+		var day = data.getDate();
+		var month = mesi[parseInt(data.getMonth())];
+		var year = data.getFullYear();
+		return `${day} ${month} ${year}`;
+	}
 
-        const onFinish = (values) => {
-            console.log('Success:', values);
+    const DateToServerString = data => {
+        console.log(data);
+		var day = data.getDate();
+		var month = parseInt(data.getMonth()) % 11 + 1;
+		var year = data.getFullYear();
+		return `${year}-${month}-${day}`;
+	}
 
-            dispatch({type: 'user', payload: values.code});
-            dispatch({type: 'day', payload: values.day});
-            dispatch({type: 'presidio', payload: values.presidio});
-            dispatch({type: 'prenoted', payload: true});
+    const handleChange = value => {
+        message.success(`Data scelta: ${DateFormatted(value._d)}`);
+    };
 
-            values.presidio = {
-                regione: parseInt(values.presidio[0]), 
-                provincia: parseInt(values.presidio[1]), 
-                presidio: parseInt(values.presidio[2])
-            }
+    const onFinish = (values) => {
+        console.log('Success:', values);
 
-            inviaDati({
-                "user": values.code,
-                "day": '2021-05-12',
-                "presidio": values.presidio
-            }).then(data => dispatch({type: 'server-response', payload: data}));
+        dispatch({type: 'user', payload: values.code});
+        dispatch({type: 'day', payload: values.day});
+        dispatch({type: 'presidio', payload: values.presidio});
+        dispatch({type: 'prenoted', payload: true});
 
-        };
-        
-        const onFinishFailed = (errorInfo) => {
-            console.log('Failed:', errorInfo);
-        };
-
-        const disabledDate = (current) => {
-            let valoreCurrent = current.valueOf();
-            current = current._d;
-
-            var dateVietate = [new Date('2021-05-10'), new Date('2021-05-25')];
-
-            const twoDigits = (number) => {
-                return (number < 10 ? '0' : '') + number;
-            };
-
-            let day = twoDigits(current.getDate());
-            let month = twoDigits((current.getMonth()%11) + 1);
-            let year = current.getFullYear();
-
-            current = `${year}-${month}-${day}`;
-
-            let flag = false;
-
-            for (let i=0;  i < dateVietate.length && !flag; i++){
-                let dayTemp = twoDigits(dateVietate[i].getDate());
-                let monthTemp = twoDigits((dateVietate[i].getMonth()%11) + 1);
-                let yearTemp = dateVietate[i].getFullYear();
-                let textTemp = `${yearTemp}-${monthTemp}-${dayTemp}`;
-
-                flag = current == textTemp;
-            }
-
-            // Can't select days before today and the forbidden days
-            var condizioni = valoreCurrent < Date.now() || flag;
-
-            return condizioni;
+        values.presidio = {
+            regione: parseInt(values.presidio[0]), 
+            provincia: parseInt(values.presidio[1]), 
+            presidio: parseInt(values.presidio[2])
         }
+
+        inviaDati({
+            "user": values.code,
+            "day": DateToServerString(values.day._d),
+            "presidio": values.presidio
+        }).then(data => dispatch({type: 'server-response', payload: data}));
+
+    };
+    
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
+    };
+
+    const disabledDate = (current) => {
+        let valoreCurrent = current.valueOf();
+        current = current._d;
+
+        var dateVietate = [new Date('2021-05-10'), new Date('2021-05-25')];
+
+        const twoDigits = (number) => {
+            return (number < 10 ? '0' : '') + number;
+        };
+
+        let day = twoDigits(current.getDate());
+        let month = twoDigits((current.getMonth()%11) + 1);
+        let year = current.getFullYear();
+
+        current = `${year}-${month}-${day}`;
+
+        let flag = false;
+
+        for (let i=0;  i < dateVietate.length && !flag; i++){
+            let dayTemp = twoDigits(dateVietate[i].getDate());
+            let monthTemp = twoDigits((dateVietate[i].getMonth()%11) + 1);
+            let yearTemp = dateVietate[i].getFullYear();
+            let textTemp = `${yearTemp}-${monthTemp}-${dayTemp}`;
+
+            flag = current == textTemp;
+        }
+
+        // Can't select days before today and the forbidden days
+        var condizioni = valoreCurrent < Date.now() || flag;
+
+        return condizioni;
+    }
 
     return(
         <div className="prenota-window window">
