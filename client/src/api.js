@@ -2,16 +2,43 @@ export default {
 	getPresidi
 };
 
-async function getPresidi () { 
-    var response = await fetch('http://localhost/tamponi/get/all_rpp.php', {
+function getPresidi (callback) { 
+    fetch(process.env.REACT_APP_PRESIDI, {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
-        mode: 'no-cors', // no-cors, *cors, same-origin
+        mode: 'cors', // no-cors, *cors, same-origin
         headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Type': 'application/x-www-form-urlencoded'
         }
-    }).then(b=>b.json());
+    })
+    .then(b=>b.json())
+    .then((data) => {
+                var options = [];
+                // una volta ottenuti i dati li formatto
+                data.dati.forEach((regione, i) => {
+                    options[i] = {
+                        value: regione.id,
+                        label: regione.nome,
+                        children: []
+                    }
+                    
+                    regione.province.forEach((provincia, j) => {
+                        options[i].children[j] = {
+                            value: provincia.id,
+                            label: provincia.nome,
+                            children: []
+                        }
+                        
+                        provincia.presidi.forEach((presidio, k) => {
+                            options[i].children[j].children[k] = {
+                                value: presidio.id,
+                                label: presidio.nome
+                            }
+                        })
+                    })
+                });
 
-    console.log(response?.dati);
-    return response.dati;
+                // chiamo la dispatch passata come callback
+                callback({type: 'presidi', payload: options})
+            }
+        );
 }

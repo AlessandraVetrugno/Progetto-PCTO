@@ -3,7 +3,7 @@ import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result, Sp
 import { UserOutlined, InfoCircleOutlined, CalendarOutlined } from '@ant-design/icons';
 import QRCode from "qrcode.react";
 import {PopUp, appear} from "../PopUp";
-import test from '../../api.js';
+import api from '../../api.js';
 
 const { Paragraph } = Typography;
 
@@ -17,13 +17,18 @@ const INITIAL_CONTEXT = {
     presidio: null,
     prenoted: false,
     prenotationCode: null,
-    serverResponse: null
+    serverResponse: null,
+    presidi: []
 };
 
 // TODO: resettare lo stato della prenotazione una volta chiuso il popup
 
 function Prenota() {
     const [state, dispatch] = useReducer(reducer, INITIAL_CONTEXT);
+
+    useEffect(() => {
+        api.getPresidi(dispatch);
+    }, [])
 
     const btnStyle = {
         color: 'white',
@@ -80,46 +85,6 @@ function ResultPage(){
 function PrenotePage() {
     const { state, dispatch } = useContext(AppContext);
     const [presidi, setPresidi] = useState(null);
-
-    useEffect(() => {
-        fetch('http://localhost/tamponi/get/all_rpp.php', {
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, *cors, same-origin
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        })
-        .then(b=>b.json())
-        .then((data) => {
-                var options = [];
-                // una volta ottenuti i dati li formatto
-                data.dati.forEach((regione, i) => {
-                    options[i] = {
-                        value: regione.id,
-                        label: regione.nome,
-                        children: []
-                    }
-                    
-                    regione.province.forEach((provincia, j) => {
-                        options[i].children[j] = {
-                            value: provincia.id,
-                            label: provincia.nome,
-                            children: []
-                        }
-                        
-                        provincia.presidi.forEach((presidio, k) => {
-                            options[i].children[j].children[k] = {
-                                value: presidio.id,
-                                label: presidio.nome
-                            }
-                        })
-                    })
-                });
-
-                setPresidi(options);
-            }
-        );
-    });
 
 
     const layout = {
@@ -241,7 +206,7 @@ function PrenotePage() {
                     },
                     ]}
                 >
-                    <Cascader options={presidi} placeholder="Seleziona il presidio" /* prefix={<HomeOutlined />} */ />
+                    <Cascader options={state.presidi} placeholder="Seleziona il presidio" /* prefix={<HomeOutlined />} */ />
                 </Form.Item>
 
                 <Form.Item
@@ -312,6 +277,12 @@ function reducer(state, action) {
             newState = {
                 ...state,
                 prenoted: action.payload
+            }
+            break;
+        case 'presidi':
+            newState = {
+                ...state,
+                presidi: action.payload
             }
             break;
         case 'server-response':
