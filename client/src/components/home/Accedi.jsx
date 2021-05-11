@@ -1,6 +1,6 @@
 import React, {useContext, useReducer, useState, useEffect} from "react";
 import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result } from 'antd';
-import { UserOutlined, InfoCircleOutlined, InfoCircleTwoTone  } from '@ant-design/icons';
+import { UserOutlined, InfoCircleOutlined, LockOutlined  } from '@ant-design/icons';
 import {PopUp, appear} from "../PopUp";
 import test from '../../api.js';
 
@@ -87,21 +87,20 @@ function AccediWindow() {
                 >
 
                 <Form.Item
-                    label="Codice fiscale"
-                    name="code"
+                    label="Utente"
+                    name="utente"
                     rules={[
                     {
                         required: true, 
-                        message: 'Codice fiscale non inserito!',
+                        message: 'Utente non inserito!',
                     },
                     ]}
                 >
                     <Input 
-                        placeholder="codice fiscale" 
-                        maxLength={16}
+                        placeholder="codice utente" 
                         prefix={<UserOutlined />} 
                         suffix={
-                            <Tooltip title="è necessario inserire il codice fiscale per poter prenotare un tampone">
+                            <Tooltip title="è necessario inserire le credenziali per poter accedere all'area riservata">
                                 <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
                             </Tooltip>
                         }
@@ -109,8 +108,8 @@ function AccediWindow() {
                 </Form.Item>
 
                 <Form.Item
-                    label="Codice prenotazione"
-                    name="codicePrenotazione"
+                    label="Password"
+                    name="password"
                     rules={[
                     {
                         required: true, 
@@ -118,15 +117,9 @@ function AccediWindow() {
                     },
                     ]}
                 >
-                    <Input 
-                        placeholder="codice prenotazione" 
-                        maxLength={16}
-                        prefix={<UserOutlined />} 
-                        suffix={
-                            <Tooltip title="è necessario inserire il codice della prenotazione per poter prenotare un tampone">
-                                <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-                            </Tooltip>
-                        }
+                    <Input.Password 
+                        placeholder="password" 
+                        prefix={<LockOutlined />} 
                     />
                 </Form.Item>
 
