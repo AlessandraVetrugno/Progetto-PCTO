@@ -2,7 +2,7 @@ import React from "react";
 import { Redirect, Link } from "react-router-dom";
 import "../assets/styles/template.css";
 /* import GitHubIcon from '@material-ui/icons/GitHub'; */
-import BannerImage from "url:../assets/img/banner.png";
+import BannerImage from "../assets/img/banner.png";
 
 function Template({component: ComponentJSX}) {
 	return (
