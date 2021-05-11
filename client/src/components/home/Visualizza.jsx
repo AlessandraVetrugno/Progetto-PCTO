@@ -1,59 +1,24 @@
 import React, {useContext, useReducer, useState, useEffect} from "react";
-import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result } from 'antd';
-import { UserOutlined, InfoCircleOutlined, InfoCircleTwoTone  } from '@ant-design/icons';
+import { Form, Input, Tooltip, Button, Result } from 'antd';
+import { UserOutlined, InfoCircleOutlined, BookOutlined, BookTwoTone  } from '@ant-design/icons';
 import {PopUp, appear} from "../PopUp";
-import test from '../../api.js';
+import api from '../../api.js';
 
 export default Visualizza;
 
-const AppContext = React.createContext(null);
-
-const INITIAL_CONTEXT = {
-    user: null,
-    day: null,
-    presidio: null,
-    prenoted: false,
-    prenotationCode: null
-};
-
 function Visualizza() {
-    const [state, dispatch] = useReducer(reducer, INITIAL_CONTEXT);
-
 	return (
-        <AppContext.Provider value={{ state, dispatch }} >
-            <Button shape="round" icon={<InfoCircleTwoTone />} size={'large'} className="btn-home"
-            onClick={ () => appear(true, state.prenoted ? 'result-window' : 'visualizza-window') } >
+        <>
+            <Button shape="round" icon={<BookTwoTone />} size={'large'} className="btn-home"
+            onClick={ () => appear(true, 'visualizza-window') } >
                 Visualizza una prenotazione
             </Button>
-            <PopUp component={<Window context={AppContext}/>} style={{height: '600px'}} />
-        </AppContext.Provider>
+            <PopUp component={<VisualizzaWindow />} style={{height: '600px'}} />
+        </>
 	);
 }
 
-function Window() {
-    const { state, dispatch } = useContext(AppContext);
-    var SelectedWindow = VisualizzaWindow;
-    if (state?.prenoted) SelectedWindow = ResultWindow;
-    return (
-        <SelectedWindow context={AppContext} />
-    )
-}
-
-function ResultWindow(){
-    return (
-        <div className="result-window window">
-            <Result
-                status="success"
-                title="Prenotazione effettuata con successo!"
-                subTitle="Codice prenotazione: 8D923NIDA0DH9A Visualizza prenotazione" />
-        </div>
-    )
-}
-
 function VisualizzaWindow() {
-    const { state, dispatch } = useContext(AppContext);
-
-
     const layout = {
         labelCol: { span: 10 },
         wrapperCol: { span: 16 },
@@ -64,7 +29,12 @@ function VisualizzaWindow() {
     };
 
     const onFinish = (values) => {
-        console.log('Success:', values);
+        const visualizzaPrenotazione = (data) => {
+            sessionStorage.setItem('prenotazione', JSON.stringify(data.dati));
+            location.assign('/prenotazione');
+        }
+
+        api.getPrenotazione(visualizzaPrenotazione, values);
 
     };
     
@@ -87,7 +57,7 @@ function VisualizzaWindow() {
 
                 <Form.Item
                     label="Codice fiscale"
-                    name="codiceFiscale"
+                    name="codice_fiscale"
                     rules={[
                     {
                         required: true, 
@@ -100,7 +70,7 @@ function VisualizzaWindow() {
                         maxLength={16}
                         prefix={<UserOutlined />} 
                         suffix={
-                            <Tooltip title="è necessario inserire il codice fiscale per poter prenotare un tampone">
+                            <Tooltip title="è necessario inserire il codice fiscale per poter visualizzare una prenotazione">
                                 <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
                             </Tooltip>
                         }
@@ -109,93 +79,26 @@ function VisualizzaWindow() {
 
                 <Form.Item
                     label="Codice prenotazione"
-                    name="codicePrenotazione"
+                    name="codice_prenotazione"
                     rules={[
                     {
                         required: true, 
-                        message: 'Codice prenotazione non inserito!',
+                        message: 'Codice della prenotazione non inserito!',
                     },
                     ]}
                 >
                     <Input 
                         placeholder="codice prenotazione" 
-                        maxLength={16}
-                        prefix={<UserOutlined />} 
-                        suffix={
-                            <Tooltip title="è necessario inserire il codice della prenotazione per poter prenotare un tampone">
-                                <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-                            </Tooltip>
-                        }
+                        prefix={<BookOutlined />}
                     />
                 </Form.Item>
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
-                    Prenota
+                    Visualizza
                     </Button>
                 </Form.Item>
             </Form>
         </div>
     )
-}
-
-function reducer(state, action) {
-    let newState = {...state}
-	switch (action.type) {
-        case 'reset':
-            newState = {...INITIAL_CONTEXT};
-            break;
-        case 'user':
-            newState = {
-                ...state,
-                user: action.payload
-            }
-            break;
-        case 'day':
-            console.log(action.payload);
-
-            const twoDigits = (number) => {
-                return (number < 10 ? '0' : '') + number;
-            };
-
-            let date = action.payload._d;
-            let day = twoDigits(date.getDate());
-            let month = twoDigits((date.getMonth()%11) + 1);
-            let year = date.getFullYear();
-
-            date = `${year}-${month}-${day}`;
-
-            newState = {
-                ...state,
-                day: date
-            }
-            break;
-        case 'presidio':
-            newState = {
-                ...state,
-                presidio: {
-                    regione: parseInt(action.payload[0]), 
-                    provincia: parseInt(action.payload[1]), 
-                    presidio: parseInt(action.payload[2])
-                }
-            }
-            break;
-        case 'prenoted':
-            newState = {
-                ...state,
-                prenoted: action.payload
-            }
-            break;
-        case 'push-data':
-            inviaDati({
-                user: newState.user,
-                day: newState.day,
-                presidio: newState.presidio
-            })
-            break;
-        default:
-			break;
-	}
-    console.log(newState);
-	return newState;
 }
