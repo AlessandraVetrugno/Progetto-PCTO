@@ -1,7 +1,8 @@
 export default {
 	getPresidi,
 	getPrenotazione,
-    annullaPrenotazione
+    annullaPrenotazione,
+    login
 };
 
 function getPresidi (callback) { 
@@ -46,13 +47,8 @@ function getPresidi (callback) {
 }
 
 function getPrenotazione (callback, data) {
-    // creiamo la stringa da inviare come parametro della query
-    // ex. codice_fiscale=ZBFMYT70T57A310Y&codice_prenotazione=609997C438D62&
-    data = Object.entries(data);
-    var query_data = '?';
-    data.forEach(entry => {
-        query_data = query_data + entry[0] + '=' + entry[1] + '&'; 
-    })
+    //converto i parametri da oggetto a stringa
+    var query_data = toQueryString(data);
 
     // faccio la richiesta GET al server
     fetch(process.env.REACT_APP_PRENOTAZIONE + query_data, {
@@ -71,6 +67,24 @@ function getPrenotazione (callback, data) {
         );
 }
 
+async function login (credenziali) {
+    //creo un oggetto adatto da inviare al server
+    const data = {credenziali: credenziali.username, password: credenziali.password};
+
+    // faccio la richiesta POST al server
+    /* const response = await fetch(process.env.REACT_APP_LOGIN, { */
+    const response = await fetch("http://localhost/tamponi/login/login.php", {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+    
+    return response.json();
+}
+
 async function annullaPrenotazione(codice) {
     const data = {codice_prenotazione: codice};
     /* fetch(process.env.REACT_APP_PRENOTAZIONE_ANNULLA) */
@@ -84,4 +98,15 @@ async function annullaPrenotazione(codice) {
     });
 
     return response.json();
+}
+
+function toQueryString (data) {
+    // creiamo la stringa da inviare come parametro della query
+    // ex. codice_fiscale=ZBFMYT70T57A310Y&codice_prenotazione=609997C438D62&
+    data = Object.entries(data);
+    var query_data = '?';
+    data.forEach(entry => {
+        query_data = query_data + entry[0] + '=' + entry[1] + '&'; 
+    })
+    return query_data;
 }

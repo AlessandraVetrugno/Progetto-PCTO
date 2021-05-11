@@ -1,59 +1,33 @@
-import React, {useContext, useReducer, useState, useEffect} from "react";
-import { Form, Input, Tooltip, Button, DatePicker, message, Cascader, Result } from 'antd';
+import React from "react";
+import { Form, Input, Tooltip, Button } from 'antd';
 import { UserOutlined, InfoCircleOutlined, LockOutlined  } from '@ant-design/icons';
 import {PopUp, appear} from "../PopUp";
-import test from '../../api.js';
+import api from '../../api';
+
+// importo il mio gestore di utenti
+import { useUser } from '../../AuthContext';
+
+//importo la cronologia delle pagine che mi serve per muovermi fra di esse
+import { useHistory } from "react-router-dom";
 
 export default Accedi;
 
-const AppContext = React.createContext(null);
-
-const INITIAL_CONTEXT = {
-    user: null,
-    day: null,
-    presidio: null,
-    prenoted: false,
-    prenotationCode: null
-};
-
 function Accedi() {
-    const [state, dispatch] = useReducer(reducer, INITIAL_CONTEXT);
-
 	return (
-        <AppContext.Provider value={{ state, dispatch }} >
+        <>
             <Button shape="round" icon={<UserOutlined />} size={'large'} className="btn-home"
             style={{ backgroundColor: '#52c41a', color: 'white'}}
-            onClick={ () => appear(true, state.prenoted ? 'result-window' : 'accedi-window') } >
+            onClick={ () => appear(true, 'accedi-window') } >
                 Area riservata
             </Button>
-            <PopUp component={<Window context={AppContext}/>} style={{height: '600px'}} />
-        </AppContext.Provider>
+            <PopUp component={<AccediWindow />} style={{height: '600px'}} />
+        </>
 	);
 }
 
-function Window() {
-    const { state, dispatch } = useContext(AppContext);
-    var SelectedWindow = AccediWindow;
-    if (state?.prenoted) SelectedWindow = ResultWindow;
-    return (
-        <SelectedWindow context={AppContext} />
-    )
-}
-
-function ResultWindow(){
-    return (
-        <div className="result-window window">
-            <Result
-                status="success"
-                title="Prenotazione effettuata con successo!"
-                subTitle="Codice prenotazione: 8D923NIDA0DH9A Accedi prenotazione" />
-        </div>
-    )
-}
-
 function AccediWindow() {
-    const { state, dispatch } = useContext(AppContext);
-
+    const {dispatch} = useUser();
+    let history = useHistory();
 
     const layout = {
         labelCol: { span: 8 },
@@ -65,8 +39,21 @@ function AccediWindow() {
     };
 
     const onFinish = (values) => {
-        console.log('Success:', values);
-
+        api.login({
+            username: values.user,
+            password: values.pass
+        }).then(response => {
+            console.log(response);
+            sessionStorage.setItem('user', JSON.stringify(response?.dati));
+            dispatch({
+                type: 'login', 
+                payload: {
+                    username: response?.dati.codice,
+                    role: response?.dati.ruolo
+                }
+            });
+            history.push("/test-privato");
+        });
     };
     
     const onFinishFailed = (errorInfo) => {
@@ -88,7 +75,7 @@ function AccediWindow() {
 
                 <Form.Item
                     label="Utente"
-                    name="utente"
+                    name="user"
                     rules={[
                     {
                         required: true, 
@@ -109,11 +96,11 @@ function AccediWindow() {
 
                 <Form.Item
                     label="Password"
-                    name="password"
+                    name="pass"
                     rules={[
                     {
                         required: true, 
-                        message: 'Codice prenotazione non inserito!',
+                        message: 'Password non inserita!',
                     },
                     ]}
                 >
@@ -125,71 +112,10 @@ function AccediWindow() {
 
                 <Form.Item {...tailLayout}>
                     <Button type="primary" htmlType="submit">
-                    Prenota
+                    Accedi
                     </Button>
                 </Form.Item>
             </Form>
         </div>
     )
-}
-
-function reducer(state, action) {
-    let newState = {...state}
-	switch (action.type) {
-        case 'reset':
-            newState = {...INITIAL_CONTEXT};
-            break;
-        case 'user':
-            newState = {
-                ...state,
-                user: action.payload
-            }
-            break;
-        case 'day':
-            console.log(action.payload);
-
-            const twoDigits = (number) => {
-                return (number < 10 ? '0' : '') + number;
-            };
-
-            let date = action.payload._d;
-            let day = twoDigits(date.getDate());
-            let month = twoDigits((date.getMonth()%11) + 1);
-            let year = date.getFullYear();
-
-            date = `${year}-${month}-${day}`;
-
-            newState = {
-                ...state,
-                day: date
-            }
-            break;
-        case 'presidio':
-            newState = {
-                ...state,
-                presidio: {
-                    regione: parseInt(action.payload[0]), 
-                    provincia: parseInt(action.payload[1]), 
-                    presidio: parseInt(action.payload[2])
-                }
-            }
-            break;
-        case 'prenoted':
-            newState = {
-                ...state,
-                prenoted: action.payload
-            }
-            break;
-        case 'push-data':
-            inviaDati({
-                user: newState.user,
-                day: newState.day,
-                presidio: newState.presidio
-            })
-            break;
-        default:
-			break;
-	}
-    console.log(newState);
-	return newState;
 }

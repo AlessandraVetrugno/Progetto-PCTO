@@ -53,8 +53,10 @@ $riga = $stmt -> fetch();
 
             // la password è corretta per l'operatore_sanitario
             if (password_verify($password, $pass_hash)) {
-                $response['codice'] = $credenziali;
-                $response['ruolo'] = 'operatore';
+                $dati = [];
+                $dati['codice'] = $credenziali;
+                $dati['ruolo'] = 'operatore';
+                $response['dati'] = $dati;
                 $response['status'] = 1;
                 echo json_encode($response);
             }
@@ -70,8 +72,10 @@ $riga = $stmt -> fetch();
 
         // la password è corretta per l'amministratore_presidio
         if (password_verify($password, $pass_hash)) {
-            $response['codice'] = $credenziali;
-            $response['ruolo'] = 'operatore';
+            $dati = [];
+            $dati['codice'] = $credenziali;
+            $dati['ruolo'] = 'amministratore_presidio';
+            $response['dati'] = $dati;
             $response['status'] = 1;
             echo json_encode($response);
         }
@@ -87,8 +91,10 @@ $riga = $stmt -> fetch();
 
     // la password è corretta amministratore_sistema
     if (password_verify($password, $pass_hash)) {
-        $response['codice'] = $credenziali;
-        $response['ruolo'] = 'operatore';
+        $dati = [];
+        $dati['codice'] = $credenziali;
+        $dati['ruolo'] = 'amministratore_sistema';
+        $response['dati'] = $dati;
         $response['status'] = 1;
         echo json_encode($response);
     }
