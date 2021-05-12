@@ -3,6 +3,8 @@
 include_once "../config.php";
 $response = array();
 $response['status'] = 0;
+
+//post
 $dati = file_get_contents("php://input");
 $dati = json_decode($dati, true);
 
