@@ -5,7 +5,9 @@ export {AuthProvider, useUser};
 const INITIAL_STATE = {
     isAuthenticated: false,
     username: null,
-    role: null
+    code: null,
+    role: null,
+    presidio: null
 }
 
 const AuthContext = React.createContext({INITIAL_STATE, userDispatch});
@@ -34,7 +36,9 @@ function userDispatch(state, action) {
 
         case 'login':
             newState.username = action.payload.username;
+            newState.code = action.payload.code;
             newState.role = action.payload.role;
+            newState.presidio = action.payload.presidio;
             newState.isAuthenticated = true;
         break;
 
