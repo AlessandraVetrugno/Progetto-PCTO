@@ -48,8 +48,10 @@ function AccediWindow() {
             dispatch({
                 type: 'login', 
                 payload: {
-                    username: response?.dati.codice,
-                    role: response?.dati.ruolo
+                    username: response?.dati.username,
+                    code: response?.dati.codice,
+                    role: response?.dati.ruolo,
+                    presidio: response?.dati.presidio
                 }
             });
             history.push("/test-privato");
