@@ -29,10 +29,12 @@ ORDER BY prenotazione.data ASC";
 //preparo la query
 $stmt = $pdo->prepare($sql);
 
+$req_data = $_GET;
+
 //prendo il nome del presidio, della provincia e della regione dal vettore get
-$nome_presidio = $_GET['presidio'];
-$nome_provincia = $_GET['provincia'];
-$nome_regione = $_GET['regione'];
+$nome_presidio = $req_data['presidio'];
+$nome_provincia = $req_data['provincia'];
+$nome_regione = $req_data['regione'];
 
 //eseguo la query
 $stmt->execute([

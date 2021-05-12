@@ -23,7 +23,7 @@ $stmt->execute([
     'codice' => $credenziali,
     'username' => $credenziali
 ]);
-$riga = $stmt -> fetch();
+$riga = $stmt -> fetch(PDO::FETCH_ASSOC);
 
     if ($riga == false) {
     //eseguo la query per le credenziali da amministratore presidio
@@ -32,7 +32,7 @@ $riga = $stmt -> fetch();
         'codice' => $credenziali,
         'username' => $credenziali
     ]);
-    $riga = $stmt -> fetch();
+    $riga = $stmt -> fetch(PDO::FETCH_ASSOC);
 
     if ($riga == false) {
         //eseguo la query per le credenziali da operatore sanitario
@@ -41,7 +41,7 @@ $riga = $stmt -> fetch();
             'codice' => $credenziali,
             'username'=> $credenziali
         ]);
-        $riga = $stmt -> fetch();
+        $riga = $stmt -> fetch(PDO::FETCH_ASSOC);
 
         if ($riga == false) {
             //non esiste l'utente
@@ -105,4 +105,3 @@ $riga = $stmt -> fetch();
         echo json_encode($response);
     }
 }
-

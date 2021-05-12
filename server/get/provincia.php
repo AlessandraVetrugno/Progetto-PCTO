@@ -2,6 +2,11 @@
 
 include_once '../config.php';
 
+$response = array();
+$response['status'] = 0;
+$dati = null;
+
+$req_data = $_GET;
 //prendo il nome della provincia e della regione dal vettore get
 $nome_regione = $_GET['regione'];
 
@@ -11,8 +16,7 @@ if($nome_regione == null){
 
      //preparo la query
      $stmt = $pdo -> query($sql);
-
-     echo json_encode($stmt->fetch());
+     $dati = $stmt->fetch(PDO::FETCH_ASSOC);
 
      //esegui se la regione è specificata
  } else {
@@ -25,5 +29,12 @@ if($nome_regione == null){
          'nome_regione' => $nome_regione
      ]);
 
-     echo json_encode($stmt->fetch());
+    $dati = $stmt->fetch(PDO::FETCH_ASSOC);
  }
+
+if ($dati != null){
+    $response['dati'] = $dati;
+    $response['status'] = 1;
+}
+
+echo json_encode($response);

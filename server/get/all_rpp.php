@@ -23,6 +23,7 @@ foreach ($regioni as $regione){
         $regione['province'][] = $provincia;
     }
     $response['dati'][] = $regione;
+    $response['status'] = 1;
 }
 
 

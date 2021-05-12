@@ -16,11 +16,9 @@ $stmt = $pdo->query($sql);
 
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 if($result != null){
-    $result = array_map('convertiDataMappa', $result);
-    $today = convertiData(date('d-m-Y'));
-
-    $response['result'] = $result;
+    $today = $result[0]['data'];
     $response['today'] = $today;
+    $response['result'] = $result;
     $response['status'] = 1;
 }
 

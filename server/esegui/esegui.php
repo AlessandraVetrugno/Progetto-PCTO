@@ -1,10 +1,16 @@
 <?php
 
 include_once "../config.php";
+$response = array();
+$response['status'] = 0;
+
+//post
+$dati = file_get_contents("php://input");
+$dati = json_decode($dati, true);
 
 // variabili valorizzate tramite POST
-$codice = $_POST['codice'];
-$note = $_POST['note'];
+$codice = $dati['codice'];
+$note = $dati['note'];
 
 $sql = "UPDATE prenotazione 
         SET eseguito = true, note = :note
@@ -17,5 +23,5 @@ $stmt->execute([
     'note'=>$note
 ]);
 
-// ridirige il browser verso la pagina indicata nella location
-//header('Location:../lista_prenotazioni.php');
+echo json_encode($response);
+
