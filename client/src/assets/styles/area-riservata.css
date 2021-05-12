@@ -2,3 +2,15 @@
     width: 300px;
     margin: 30px;
 }
+
+.slider-logo-collapsed {
+    width: 25px;
+    margin: 30px;
+}
+
+.ant-layout-sider-trigger {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
