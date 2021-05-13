@@ -25,26 +25,36 @@ $stmt ->execute([
 ]);
 
 $presidio = $pdo -> query("SELECT * FROM presidio WHERE nome = '$nome_presidio'");
-$presidio->fetch(PDO::FETCH_ASSOC);
+$presidio = $presidio -> fetch(PDO::FETCH_ASSOC);
 if($presidio != null){
 
-    $codice = strtoupper(uniqid());
-    $password = vstrtoupper(uniqid());
+    // genero un codice utente, lo riduco ad una stringa di 11 caratteri (13 => 11) e
+    // la imposto al maiuscolo
+    $codice = strtoupper(substr(uniqid(), 0,-2));
+
+    // genero la password
+    $password = uniqid();
+
     $id_presidio = $presidio['id'];
-    $pass_hash = password_hash('ADMIN_'.$password, PASSWORD_DEFAULT);
-    $stmt_admin -> execute([
+    $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+    $stmt_admin->execute([
         'codice' => $codice,
         'password' => $pass_hash,
         'id_presidio' => $id_presidio
     ]);
-    $stmt_dati = $pdo -> query("SELECT * FROM amministratore_presidio WHERE codice = '$codice'");
-    $stmt_dati->fetch(PDO::FETCH_ASSOC);
 
-    if($stmt_dati != null){
-        $response['status'] = 1;
-        $stmt_dati['password'] = 'ADMIN_'.$password;
-        $response['dati'] = $stmt_dati;
+    $stmt_dati = $pdo->query("SELECT * FROM amministratore_presidio WHERE codice = '$codice'");
+    $dati_amministratore_presidio = $stmt_dati->fetch(PDO::FETCH_ASSOC);
+
+    if ($dati_amministratore_presidio != null){
+        $dati = [];
+        $dati['password'] = $password;
+        $dati['codice'] = $dati_amministratore_presidio['codice'];
+        $dati['presidio'] = $presidio;
+
+        $result['status'] = 1;
+        $result['dati'] = $dati;
     }
 }
 
-echo json_encode($response);
+echo json_encode($result);
