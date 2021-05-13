@@ -1234,258 +1234,253 @@ test\\_%|schema||&apos;&apos;||UPDATE|G</Grants>
     <table id="356" parent="20" name="presidio"/>
     <table id="357" parent="20" name="provincia"/>
     <table id="358" parent="20" name="regione"/>
-    <table id="359" parent="20" name="test"/>
-    <column id="360" parent="352" name="id">
+    <column id="359" parent="352" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="361" parent="352" name="username">
+    <column id="360" parent="352" name="username">
       <Position>2</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="362" parent="352" name="codice">
+    <column id="361" parent="352" name="codice">
       <Position>3</Position>
       <DataType>varchar(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="363" parent="352" name="password">
+    <column id="362" parent="352" name="password">
       <Position>4</Position>
       <DataType>varchar(150)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="364" parent="352" name="id_presidio">
+    <column id="363" parent="352" name="id_presidio">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <index id="365" parent="352" name="amministratore_presidio_codice_uindex">
+    <index id="364" parent="352" name="amministratore_presidio_codice_uindex">
       <ColNames>codice</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="366" parent="352" name="amministratore_presidio_presidio_id_fk">
+    <index id="365" parent="352" name="amministratore_presidio_presidio_id_fk">
       <ColNames>id_presidio</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="367" parent="352" name="PRIMARY">
+    <key id="366" parent="352" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="368" parent="352" name="amministratore_presidio_codice_uindex">
+    <key id="367" parent="352" name="amministratore_presidio_codice_uindex">
       <ColNames>codice</ColNames>
       <UnderlyingIndexName>amministratore_presidio_codice_uindex</UnderlyingIndexName>
     </key>
-    <column id="369" parent="353" name="id">
+    <column id="368" parent="353" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="370" parent="353" name="username">
+    <column id="369" parent="353" name="username">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="371" parent="353" name="codice">
+    <column id="370" parent="353" name="codice">
       <Position>3</Position>
       <DataType>varchar(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="372" parent="353" name="password">
+    <column id="371" parent="353" name="password">
       <Position>4</Position>
       <DataType>varchar(150)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="373" parent="353" name="amministratore_sistema_codice_uindex">
+    <index id="372" parent="353" name="amministratore_sistema_codice_uindex">
       <ColNames>codice</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <key id="374" parent="353" name="amministratore_sistema_codice_uindex">
+    <key id="373" parent="353" name="amministratore_sistema_codice_uindex">
       <ColNames>codice</ColNames>
       <UnderlyingIndexName>amministratore_sistema_codice_uindex</UnderlyingIndexName>
     </key>
-    <column id="375" parent="354" name="id">
+    <column id="374" parent="354" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="376" parent="354" name="username">
+    <column id="375" parent="354" name="username">
       <Position>2</Position>
       <DataType>varchar(150)|0s</DataType>
     </column>
-    <column id="377" parent="354" name="codice">
+    <column id="376" parent="354" name="codice">
       <Position>3</Position>
       <DataType>varchar(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="378" parent="354" name="password">
+    <column id="377" parent="354" name="password">
       <Position>4</Position>
       <DataType>varchar(150)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="379" parent="354" name="id_presidio">
+    <column id="378" parent="354" name="id_presidio">
       <Position>5</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <index id="380" parent="354" name="operatore_sanitario_codice_uindex">
+    <index id="379" parent="354" name="operatore_sanitario_codice_uindex">
       <ColNames>codice</ColNames>
       <Unique>1</Unique>
       <Type>btree</Type>
     </index>
-    <index id="381" parent="354" name="operatore_sanitario_presidio_id_fk">
+    <index id="380" parent="354" name="operatore_sanitario_presidio_id_fk">
       <ColNames>id_presidio</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="382" parent="354" name="PRIMARY">
+    <key id="381" parent="354" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="383" parent="354" name="operatore_sanitario_codice_uindex">
+    <key id="382" parent="354" name="operatore_sanitario_codice_uindex">
       <ColNames>codice</ColNames>
       <UnderlyingIndexName>operatore_sanitario_codice_uindex</UnderlyingIndexName>
     </key>
-    <column id="384" parent="355" name="id">
+    <column id="383" parent="355" name="id">
       <Position>1</Position>
       <DataType>int(10) unsigned|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="385" parent="355" name="codice_fiscale">
+    <column id="384" parent="355" name="codice_fiscale">
       <Position>2</Position>
       <DataType>varchar(16)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="386" parent="355" name="data">
+    <column id="385" parent="355" name="data">
       <Position>3</Position>
       <DataType>date|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="387" parent="355" name="codice">
+    <column id="386" parent="355" name="codice">
       <Position>4</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="388" parent="355" name="eseguito">
+    <column id="387" parent="355" name="eseguito">
       <Position>5</Position>
       <DataType>tinyint(1)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="389" parent="355" name="note">
+    <column id="388" parent="355" name="note">
       <Position>6</Position>
       <DataType>text|0s</DataType>
     </column>
-    <column id="390" parent="355" name="annullato">
+    <column id="389" parent="355" name="annullato">
       <Position>7</Position>
       <DataType>tinyint(1)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <column id="391" parent="355" name="id_presidio">
+    <column id="390" parent="355" name="id_presidio">
       <Position>8</Position>
       <DataType>int(11)|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
     </column>
-    <index id="392" parent="355" name="prenotazione_presidio_id_fk">
+    <index id="391" parent="355" name="prenotazione_presidio_id_fk">
       <ColNames>id_presidio</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="393" parent="355" name="PRIMARY">
+    <key id="392" parent="355" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="394" parent="356" name="id">
+    <column id="393" parent="356" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="395" parent="356" name="nome">
+    <column id="394" parent="356" name="nome">
       <Position>2</Position>
       <DataType>varchar(100)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="396" parent="356" name="indirizzo">
+    <column id="395" parent="356" name="indirizzo">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
     </column>
-    <column id="397" parent="356" name="id_provincia">
+    <column id="396" parent="356" name="id_provincia">
       <Position>4</Position>
       <DataType>int(11)|0s</DataType>
     </column>
-    <index id="398" parent="356" name="presidio_provincia_id_fk">
+    <index id="397" parent="356" name="presidio_provincia_id_fk">
       <ColNames>id_provincia</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="399" parent="356" name="PRIMARY">
+    <key id="398" parent="356" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="400" parent="356" name="presidio_provincia_id_fk">
+    <foreign-key id="399" parent="356" name="presidio_provincia_id_fk">
       <ColNames>id_provincia</ColNames>
       <RefTableName>provincia</RefTableName>
       <RefColNames>id</RefColNames>
       <OnUpdate>cascade</OnUpdate>
       <OnDelete>set-null</OnDelete>
     </foreign-key>
-    <column id="401" parent="357" name="id">
+    <column id="400" parent="357" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="402" parent="357" name="nome">
+    <column id="401" parent="357" name="nome">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="403" parent="357" name="id_regione">
+    <column id="402" parent="357" name="id_regione">
       <Position>3</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="404" parent="357" name="provincia_regione_id_fk">
+    <index id="403" parent="357" name="provincia_regione_id_fk">
       <ColNames>id_regione</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="405" parent="357" name="PRIMARY">
+    <key id="404" parent="357" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="406" parent="357" name="provincia_regione_id_fk">
+    <foreign-key id="405" parent="357" name="provincia_regione_id_fk">
       <ColNames>id_regione</ColNames>
       <RefTableName>regione</RefTableName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="407" parent="358" name="id">
+    <column id="406" parent="358" name="id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>null</SequenceIdentity>
     </column>
-    <column id="408" parent="358" name="nome">
+    <column id="407" parent="358" name="nome">
       <Position>2</Position>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <key id="409" parent="358" name="PRIMARY">
+    <key id="408" parent="358" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="410" parent="359" name="data">
-      <Position>1</Position>
-      <DataType>date|0s</DataType>
-    </column>
   </database-model>
 </dataSource>

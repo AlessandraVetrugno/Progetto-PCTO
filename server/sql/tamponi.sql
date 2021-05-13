@@ -208,28 +208,6 @@ LOCK TABLES `regione` WRITE;
 INSERT INTO `regione` VALUES (1,'Abruzzo'),(2,'Basilicata'),(3,'Calabria'),(4,'Campania'),(5,'Emilia-Romagna'),(6,'Friuli Venezia Giulia'),(7,'Lazio'),(8,'Liguria'),(9,'Lombardia'),(10,'Marche'),(11,'Molise'),(12,'Piemonte'),(13,'Puglia'),(14,'Sardegna'),(15,'Sicilia'),(16,'Toscana'),(17,'Trentino-Alto Adige'),(18,'Umbria'),(19,'Valle d\'Aosta'),(20,'Veneto');
 /*!40000 ALTER TABLE `regione` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Table structure for table `test`
---
-
-DROP TABLE IF EXISTS `test`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `test` (
-  `data` date DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `test`
---
-
-LOCK TABLES `test` WRITE;
-/*!40000 ALTER TABLE `test` DISABLE KEYS */;
-INSERT INTO `test` VALUES ('2021-05-10');
-/*!40000 ALTER TABLE `test` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -240,4 +218,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-13  9:15:30
+-- Dump completed on 2021-05-13  9:20:24
