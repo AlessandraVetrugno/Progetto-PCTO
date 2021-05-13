@@ -30,7 +30,8 @@ CREATE TABLE `amministratore_presidio` (
   `id_presidio` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `amministratore_presidio_codice_uindex` (`codice`),
-  KEY `amministratore_presidio_presidio_id_fk` (`id_presidio`)
+  KEY `amministratore_presidio_presidio_id_fk` (`id_presidio`),
+  CONSTRAINT `amministratore_presidio_presidio_id_fk` FOREIGN KEY (`id_presidio`) REFERENCES `presidio` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -85,7 +86,8 @@ CREATE TABLE `operatore_sanitario` (
   `id_presidio` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `operatore_sanitario_codice_uindex` (`codice`),
-  KEY `operatore_sanitario_presidio_id_fk` (`id_presidio`)
+  KEY `operatore_sanitario_presidio_id_fk` (`id_presidio`),
+  CONSTRAINT `operatore_sanitario_presidio_id_fk` FOREIGN KEY (`id_presidio`) REFERENCES `presidio` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -116,7 +118,8 @@ CREATE TABLE `prenotazione` (
   `annullato` tinyint(1) DEFAULT 0,
   `id_presidio` int(11) DEFAULT 0,
   PRIMARY KEY (`id`),
-  KEY `prenotazione_presidio_id_fk` (`id_presidio`)
+  KEY `prenotazione_presidio_id_fk` (`id_presidio`),
+  CONSTRAINT `prenotazione_presidio_id_fk` FOREIGN KEY (`id_presidio`) REFERENCES `presidio` (`id`) ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -218,4 +221,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-13  9:20:24
+-- Dump completed on 2021-05-13 17:57:16

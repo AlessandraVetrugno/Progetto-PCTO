@@ -11,6 +11,7 @@ $sql_admin = 'INSERT INTO amministratore_presidio (codice, password, id_presidio
 
 $stmt = $pdo -> prepare($sql);
 $stmt_admin = $pdo -> prepare($sql_admin);
+
 $dati = file_get_contents("php://input");
 $dati = json_decode($dati, true);
 
@@ -24,24 +25,27 @@ $stmt ->execute([
 ]);
 
 $presidio = $pdo -> query("SELECT * FROM presidio WHERE nome = '$nome_presidio'");
-$presidio->fetch(PDO::FETCH_ASSOC);
+$presidio = $presidio -> fetch(PDO::FETCH_ASSOC);
 if($presidio != null){
 
     $codice = strtoupper(uniqid());
-    $password = vstrtoupper(uniqid());
+    $password = strtoupper(uniqid('ADMIN_'));
+    echo $password.'   ';
+    echo $codice.'   ';
     $id_presidio = $presidio['id'];
-    $pass_hash = password_hash('ADMIN_'.$password, PASSWORD_DEFAULT);
+    echo $id_presidio;
+    $pass_hash = password_hash($password, PASSWORD_DEFAULT);
     $stmt_admin -> execute([
         'codice' => $codice,
         'password' => $pass_hash,
         'id_presidio' => $id_presidio
     ]);
     $stmt_dati = $pdo -> query("SELECT * FROM amministratore_presidio WHERE codice = '$codice'");
-    $stmt_dati->fetch(PDO::FETCH_ASSOC);
+    $stmt_dati = $stmt_dati->fetch(PDO::FETCH_ASSOC);
 
     if($stmt_dati != null){
         $response['status'] = 1;
-        $stmt_dati['password'] = 'ADMIN_'.$password;
+        $stmt_dati['password'] = $password;
         $response['dati'] = $stmt_dati;
     }
 }
