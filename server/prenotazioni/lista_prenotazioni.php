@@ -5,16 +5,28 @@ $response = array();
 $response['status'] = 0;
 
 $req_data = $_GET;
-$nome_presidio = $req_data['nome_presidio'];
+$id_presidio = $req_data['id_presidio'];
 
-//prendo tutte le prenotazioni di un presidio dato il nome
-$sql = 'SELECT prenotazione.id, prenotazione.codice_fiscale, prenotazione.data, prenotazione.codice, 
-        prenotazione.eseguito, prenotazione.note, prenotazione.annullato, prenotazione.id_presidio 
-        FROM presidio, prenotazione
-        WHERE presidio.nome = :nome_presidio AND presidio.id = prenotazione.id_presidio AND prenotazione.annullato = false';
-$stmt = $pdo->prepare($sql);
+//prendo tutte le prenotazioni di un presidio dato il suo ID
+$sql = 'SELECT prenotazione.*
+        FROM prenotazione
+        WHERE prenotazione.id_presidio = :id_presidio
+        AND prenotazione.data >= CURDATE()
+        ORDER BY prenotazione.data ASC';
 
-$stmt->execute(['nome_presidio'=>$nome_presidio]);
+// se l'amministratore è di sistema e slegato da qualsiasi presidio
+if (!isset($req_data['id_presidio'])) {
+    $sql = 'SELECT prenotazione.*
+            FROM prenotazione
+            WHERE prenotazione.data >= CURDATE()
+            ORDER BY prenotazione.data ASC';
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute();
+} else {
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(['id_presidio' => $id_presidio]);
+}
+
 $dati = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if($dati != null){

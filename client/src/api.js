@@ -88,7 +88,7 @@ async function login (credenziali) {
 async function annullaPrenotazione(codice) {
     const data = {codice_prenotazione: codice};
     /* fetch(process.env.REACT_APP_PRENOTAZIONE_ANNULLA) */
-    const response = await fetch('http://localhost/tamponi/prenotazioni/annulla_prenotazione.php', {
+    const response = await fetch(process.env.REACT_APP_PRENOTAZIONE_ANNULLA, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         headers: {
