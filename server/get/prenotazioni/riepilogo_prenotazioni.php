@@ -7,12 +7,11 @@ $response = array();
 $response['status'] = 0;
 
 
-$dati = file_get_contents("php://input");
-$dati = json_decode($dati, true);
+$req_data = $_GET;
 
 //variabili valorizzate tramite POST
-$giorno1 = $dati['giorno1'];
-$giorno2 = $dati['giorno2'];
+$giorno1 = $req_data['giorno1'];
+$giorno2 = $req_data['giorno2'];
 
 // query di inserimento preparata
 $sql = "SELECT prenotazione.data, COUNT(*) AS n_prenotazioni

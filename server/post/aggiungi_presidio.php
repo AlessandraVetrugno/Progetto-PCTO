@@ -11,6 +11,7 @@ $sql_admin = 'INSERT INTO amministratore_presidio (codice, password, id_presidio
 
 $stmt = $pdo -> prepare($sql);
 $stmt_admin = $pdo -> prepare($sql_admin);
+
 $dati = file_get_contents("php://input");
 $dati = json_decode($dati, true);
 
