@@ -67,9 +67,7 @@ function AccediWindow() {
             <h3>Accedi</h3>
             <Form
                 name="basic"
-                initialValues={{
-                    remember: true,
-                }}
+                size="large"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 {...layout}

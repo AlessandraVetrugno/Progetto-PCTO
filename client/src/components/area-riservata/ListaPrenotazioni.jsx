@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Table, Tag, Typography } from 'antd';
-import { UserOutlined, LineChartOutlined, CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { UserOutlined, MinusCircleOutlined , CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import BannerLight from "../../assets/img/banner-light.png";
 import { useUser } from "../../AuthContext";
 import privateAPI from "./privateAPI";
@@ -56,6 +56,24 @@ function ListaPrenotazioni() {
             key: 'codice_fiscale',
         },
         {
+            title: 'Annullata',
+            dataIndex: 'annullato',
+            key: 'annullato',
+            render: annullato => {
+                if (parseInt(annullato))
+                    return <Tag icon={<MinusCircleOutlined />} color="warning">annullata</Tag>
+            }
+        },
+        {
+            title: 'Eseguita',
+            dataIndex: 'eseguito',
+            key: 'eseguito',
+            render: eseguito => {
+                if (parseInt(eseguito))
+                    return <Tag icon={<CheckCircleOutlined  />} color="success">eseguita</Tag>
+            }
+        },
+        {
             title: 'Data',
             dataIndex: 'data',
             key: 'data',
@@ -70,10 +88,11 @@ function ListaPrenotazioni() {
             render: tags => {
                 <>
                 {tags.map((tag, index) => {
-                    if (tag == 'eseguito')
-                        return <Tag icon={<CheckCircleOutlined />} color="success">ESEGUITO</Tag>;
-                    if (tag == 'annullato')
-                        return <Tag icon={<CloseCircleOutlined />} color="error">ANNULLATO</Tag>;
+                    console.log(tag);
+                    if (tag = 'eseguito')
+                        return <Tag icon={<CheckCircleOutlined  />} color="success">eseguita</Tag>
+                    if (tag = 'annullato')
+                        return <Tag icon={<MinusCircleOutlined />} color="warning">annullata</Tag>
 
                     return (
                         <>{' ‏‏‎ '}</>

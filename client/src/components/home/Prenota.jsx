@@ -181,9 +181,7 @@ function PrenotePage() {
             <h3>Prenota un tampone</h3>
             <Form
                 name="basic"
-                initialValues={{
-                    remember: true,
-                }}
+                size="large"
                 onFinish={onFinish}
                 onFinishFailed={onFinishFailed}
                 {...layout}
