@@ -41,6 +41,7 @@ if($presidio != null){
 
     if($stmt_dati != null){
         $response['status'] = 1;
+        $stmt_dati['password'] = 'ADMIN_'.$password;
         $response['dati'] = $stmt_dati;
     }
 }
