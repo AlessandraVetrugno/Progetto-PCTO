@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `amministratore_presidio`;
 CREATE TABLE `amministratore_presidio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
-  `codice` int(11) NOT NULL,
+  `codice` varchar(11) NOT NULL,
   `password` varchar(150) NOT NULL,
   `id_presidio` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
@@ -40,7 +40,7 @@ CREATE TABLE `amministratore_presidio` (
 
 LOCK TABLES `amministratore_presidio` WRITE;
 /*!40000 ALTER TABLE `amministratore_presidio` DISABLE KEYS */;
-INSERT INTO `amministratore_presidio` VALUES (1,'Alberto Angelo',1000000001,'$2y$10$Onvg6g9kd2bHGGrCnbzyHOD5Y9wXmA/nKiJsGC9pu7.YVxZHtc8pS',1);
+INSERT INTO `amministratore_presidio` VALUES (1,'Alberto Angelo','1000000001','$2y$10$Onvg6g9kd2bHGGrCnbzyHOD5Y9wXmA/nKiJsGC9pu7.YVxZHtc8pS',1);
 /*!40000 ALTER TABLE `amministratore_presidio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS `amministratore_sistema`;
 CREATE TABLE `amministratore_sistema` (
   `id` int(11) NOT NULL,
   `username` varchar(100) NOT NULL,
-  `codice` int(11) NOT NULL,
+  `codice` varchar(11) NOT NULL,
   `password` varchar(150) NOT NULL,
   UNIQUE KEY `amministratore_sistema_codice_uindex` (`codice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -66,7 +66,7 @@ CREATE TABLE `amministratore_sistema` (
 
 LOCK TABLES `amministratore_sistema` WRITE;
 /*!40000 ALTER TABLE `amministratore_sistema` DISABLE KEYS */;
-INSERT INTO `amministratore_sistema` VALUES (1,'Federico Gavazzi',1111,'$2y$10$a5RUkM8xgF1zsWQ73EI68.dSXuiNhAWHOwNBOVtefs0lTf4fQ8Wy2'),(2,'Nizar Nadif',1112,'$2y$10$.waQOaODdf6mwHDN6G1eDudTqGiGhY9JorlpK0UQlSR333VAL8xeK ');
+INSERT INTO `amministratore_sistema` VALUES (1,'Federico Gavazzi','1111','$2y$10$a5RUkM8xgF1zsWQ73EI68.dSXuiNhAWHOwNBOVtefs0lTf4fQ8Wy2'),(2,'Nizar Nadif','1112','$2y$10$.waQOaODdf6mwHDN6G1eDudTqGiGhY9JorlpK0UQlSR333VAL8xeK ');
 /*!40000 ALTER TABLE `amministratore_sistema` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -80,7 +80,7 @@ DROP TABLE IF EXISTS `operatore_sanitario`;
 CREATE TABLE `operatore_sanitario` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(150) DEFAULT NULL,
-  `codice` int(11) NOT NULL,
+  `codice` varchar(11) NOT NULL,
   `password` varchar(150) NOT NULL,
   `id_presidio` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
@@ -95,7 +95,7 @@ CREATE TABLE `operatore_sanitario` (
 
 LOCK TABLES `operatore_sanitario` WRITE;
 /*!40000 ALTER TABLE `operatore_sanitario` DISABLE KEYS */;
-INSERT INTO `operatore_sanitario` VALUES (1,'Gino Bartali',1000022351,'$2y$10$Fv9pijCGJ.95PIjTTCFFB.KmPkKZEa0s0lI5QODOY3v8jboUILMn2',1);
+INSERT INTO `operatore_sanitario` VALUES (1,'Gino Bartali','1000022351','$2y$10$Fv9pijCGJ.95PIjTTCFFB.KmPkKZEa0s0lI5QODOY3v8jboUILMn2',1);
 /*!40000 ALTER TABLE `operatore_sanitario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -117,7 +117,7 @@ CREATE TABLE `prenotazione` (
   `id_presidio` int(11) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `prenotazione_presidio_id_fk` (`id_presidio`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +126,7 @@ CREATE TABLE `prenotazione` (
 
 LOCK TABLES `prenotazione` WRITE;
 /*!40000 ALTER TABLE `prenotazione` DISABLE KEYS */;
-INSERT INTO `prenotazione` VALUES (4,'PTNGNN80A01D122H','2021-05-12','60964545C6326',0,NULL,0,1);
+INSERT INTO `prenotazione` VALUES (4,'PTNGNN80A01D122H','2021-05-12','60964545C6326',0,NULL,1,1),(5,'PTNGNN80A01D122H','2021-05-10','6097DCEA2ACD5',0,NULL,0,1),(6,'PTNGNN80A01D122H','2021-05-11','6097DD4B6E828',0,NULL,0,1),(7,'PTNGNN80A01D122H','2020-05-01','6097DD8097E6F',0,NULL,0,1),(8,'PTNGNN80A01D122H','2020-10-01','60980C29E0EB7',0,NULL,0,1),(9,'PTNGNN80A01D122H','2020-11-01','60980C9293A84',0,NULL,0,1),(10,'PTNGNN80A01D122H','2020-10-01','60980D567C190',0,NULL,0,1),(11,'PTNGNN80A01D122H','2020-11-01','6099534F374B1',0,NULL,0,1);
 /*!40000 ALTER TABLE `prenotazione` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,7 +140,7 @@ DROP TABLE IF EXISTS `presidio`;
 CREATE TABLE `presidio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(100) NOT NULL,
-  `indirizzo` varchar(255) NOT NULL,
+  `indirizzo` varchar(255) DEFAULT NULL,
   `id_provincia` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `presidio_provincia_id_fk` (`id_provincia`),
@@ -208,6 +208,28 @@ LOCK TABLES `regione` WRITE;
 INSERT INTO `regione` VALUES (1,'Abruzzo'),(2,'Basilicata'),(3,'Calabria'),(4,'Campania'),(5,'Emilia-Romagna'),(6,'Friuli Venezia Giulia'),(7,'Lazio'),(8,'Liguria'),(9,'Lombardia'),(10,'Marche'),(11,'Molise'),(12,'Piemonte'),(13,'Puglia'),(14,'Sardegna'),(15,'Sicilia'),(16,'Toscana'),(17,'Trentino-Alto Adige'),(18,'Umbria'),(19,'Valle d\'Aosta'),(20,'Veneto');
 /*!40000 ALTER TABLE `regione` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `test`
+--
+
+DROP TABLE IF EXISTS `test`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `test` (
+  `data` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `test`
+--
+
+LOCK TABLES `test` WRITE;
+/*!40000 ALTER TABLE `test` DISABLE KEYS */;
+INSERT INTO `test` VALUES ('2021-05-10');
+/*!40000 ALTER TABLE `test` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -218,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-05-08 10:26:16
+-- Dump completed on 2021-05-13  9:15:30
