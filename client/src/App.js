@@ -13,7 +13,7 @@ export function App() {
 		<>
 			<BrowserRouter>
 				<Switch>
-					<PrivateRoute exact path="/test-privato" component={AreaRiservata} />
+					<PrivateRoute exact path="/area-riservata" component={AreaRiservata} />
 					<Route exact path="/" component={Home} />
 					<Route exact path="/prenotazione" component={Prenotazione} />
 					<Route exact path="/Error403" component={Error403} />

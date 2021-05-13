@@ -54,7 +54,7 @@ function AccediWindow() {
                     presidio: response?.dati.presidio
                 }
             });
-            history.push("/test-privato");
+            history.push("/area-riservata");
         });
     };
     
