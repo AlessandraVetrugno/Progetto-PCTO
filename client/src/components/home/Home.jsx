@@ -35,13 +35,23 @@ function CaroselloImmagini() {
 
 	return (
 		<>
-				<Row gutter={[16, 16]}>
+				<Row gutter={[16, 16]} className="home-content">
 					<Col  span={12}>
 						<div className="introduction-message">VUOI PRENOTARE UN TAMPONE?</div> 
-						<div className="introduction-message">temp to write, waiting...</div> 
+						<div className="introduction-text">
+							È attivo un <b>portale</b> unico per la <b>prenotazione</b> online dei tamponi a livello <b>nazionale</b>.
+							<br />Con il proprio <b>codice fiscale</b>, in totale autonomia, sarà possibile prenotare un tampone o un test rapido con <b>tre semplici passaggi</b> che prevedono:
+							<ul>
+								<li><b>aprire il sito </b> https://prenotatampone.sanita.toscana.it/ dal proprio computer di casa, ma anche da smartphone o tablet;</li>
+								<li><b>inserire</b> il codice fiscale;</li>
+								<li><b>scegliere</b> il presidio o il distretto preferito;</li>
+								<li><b>selezionare</b> la data  in cui si vuole effettuare il tampone.</li>
+							</ul>
+							<b>attendere</b> la ricezione di un sms di conferma con possibilità di stamparsi il promemoria.
+						</div>
 					</Col>
 					<Col  span={12}>
-						<Carousel autoplay dotPosition={'bottom'} >
+						<Carousel autoplay dotPosition={'right'} >
 							{
 								Object.entries(ImmaginiCarosello)?.map(
 									immagine => {

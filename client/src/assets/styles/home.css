@@ -1,6 +1,11 @@
 @font-face {
-	font-family: B612;
+	font-family: B612-BoldItalic;
 	src: url(../fonts/B612/B612-BoldItalic.ttf);
+}
+
+@font-face {
+	font-family: B612-Regular;
+	src: url(../fonts/B612/B612-Regular.ttf);
 }
 
 .home {
@@ -19,16 +24,27 @@
     padding: 0 60px;
 }
 
+.btn-home {
+    transform: scale(1.5);
+}
+
 .btn-home:hover {
-    transform: scale(1.05);
+    transform: scale(1.75);
 }
 
 .introduction-message {
-    font-family: B612;
+    font-family: B612-BoldItalic;
     font-style: normal;
-    font-weight: 500
+    font-weight: 500;
+    font-size: 50;
 }
 
+.introduction-text {
+    font-family: B612-Regular;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 25;
+}
 
 .window {
     display: flex;
