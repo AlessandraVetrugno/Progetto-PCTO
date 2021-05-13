@@ -15,36 +15,35 @@ function datesPrenotable($dates, $step = '+1 day', $format = 'Y-m-d') {
 }
 
 include_once '../config.php';
+$response = array();
+$response['status'] = 0;
 
 //query
 $sql= "SELECT prenotazione.data, COUNT(*) AS n_prenotazioni
-FROM prenotazione, presidio, provincia, regione
-WHERE prenotazione.data >= CURDATE() AND presidio.nome = :nome_presidio
-  AND presidio.id_provincia = provincia.id AND provincia.nome = :nome_provincia
-  AND provincia.id_regione = regione.id AND regione.nome = :nome_regione
+FROM prenotazione
+WHERE prenotazione.data >= CURDATE() AND prenotazione.id_presidio = :id_presidio
 GROUP BY prenotazione.data
-HAVING n_prenotazioni > 5
+HAVING n_prenotazioni < 5
 ORDER BY prenotazione.data ASC";
 
 //preparo la query
 $stmt = $pdo->prepare($sql);
 
 $req_data = $_GET;
-
 //prendo il nome del presidio, della provincia e della regione dal vettore get
-$nome_presidio = $req_data['presidio'];
-$nome_provincia = $req_data['provincia'];
-$nome_regione = $req_data['regione'];
+$presidio = $req_data['presidio'];
 
 //eseguo la query
 $stmt->execute([
-    'nome_presidio'=>$nome_presidio,
-    'nome_provincia'=>$nome_provincia,
-    'nome_regione'=>$nome_regione
+    'id_presidio'=>$presidio
 ]);
 
 //riempio il vettore di date
 $dates = array();
 while ($row = $stmt -> fetch(PDO::FETCH_ASSOC)) $dates[$row['data']] = $row;
 
-echo json_encode(datesPrenotable($dates));
+if($dates != null){
+    $response['dati'] = datesPrenotable($dates);
+    $response['status'] = 1;
+}
+echo json_encode($response);
