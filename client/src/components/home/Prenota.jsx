@@ -131,7 +131,7 @@ function PrenotePage() {
             presidio: parseInt(values.presidio[2])
         }
 
-        inviaDati({
+        api.prenota({
             "user": values.code,
             "day": DateToServerString(values.day._d),
             "presidio": values.presidio
@@ -251,7 +251,7 @@ function reducer(state, action) {
         case 'reset':
             newState = {...INITIAL_CONTEXT};
             break;
-        case 'user':
+        case 'user': 
             newState = {
                 ...state,
                 user: action.payload
@@ -309,18 +309,4 @@ function reducer(state, action) {
 	}
     console.log(newState);
 	return newState;
-}
-
-async function inviaDati(data) {
-    console.log(data);
-    const response = await fetch('http://localhost/tamponi/prenotazioni/prenota.php', {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
-    });
-
-    return response.json();
 }
