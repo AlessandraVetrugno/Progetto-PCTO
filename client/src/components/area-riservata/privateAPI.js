@@ -1,5 +1,6 @@
 export default {
-	getListaPrenotazioni
+	getListaPrenotazioni,
+    getProvinceCascader
 };
 
 async function getListaPrenotazioni (data) {
@@ -28,4 +29,35 @@ function toQueryString (data) {
         query_data = query_data + entry[0] + '=' + entry[1] + '&'; 
     })
     return query_data;
+}
+
+function getProvinceCascader (callback) { 
+    fetch(process.env.REACT_APP_PRESIDI, {
+        method: 'GET', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+    .then(b=>b.json())
+    .then((data) => {
+            var options = [];
+            // una volta ottenuti i dati li formatto
+            data.dati.forEach((regione, i) => {
+                options[i] = {
+                    value: regione.id,
+                    label: regione.nome,
+                    children: []
+                }
+                
+                regione.province.forEach((provincia, j) => {
+                    options[i].children[j] = {
+                        value: provincia.id,
+                        label: provincia.nome
+                    }
+                });
+            });
+        // chiamo la setState
+        callback(options);
+    });
 }

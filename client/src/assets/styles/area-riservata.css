@@ -10,6 +10,7 @@
 
 .ant-layout-sider-trigger {
     width: 400px;
+    background: gray;
     display: flex;
     flex-direction: column;
     justify-content: center;

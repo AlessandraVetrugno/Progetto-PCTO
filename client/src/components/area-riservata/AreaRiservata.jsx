@@ -3,12 +3,13 @@ import Template from '../Template';
 import { Layout, Menu } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import { UserOutlined, LineChartOutlined, BookOutlined, UnorderedListOutlined } from '@ant-design/icons';
-import BannerLight from "../../assets/img/banner-light.png";
-import LogoLight from "../../assets/img/logo-light.png";
+import Banner from "../../assets/img/banner.png";
+import LogoDark from "../../assets/img/logo.png";
 import { useUser } from "../../AuthContext";
 import privateAPI from "./privateAPI";
 import "../../assets/styles/area-riservata.css";
 import ListaPrenotazioni from "./ListaPrenotazioni";
+import CreaPresidio from "./CreaPresidio";
 
 export default AreaRiservata;
 
@@ -24,13 +25,13 @@ function AreaRiservata(){
 
 	return (
 		<Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} width={400}>
+        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} width={400} theme="light">
 			{
 				collapsed ? 
-					<img src={LogoLight} className='slider-logo-collapsed' /> :
-					<img src={BannerLight} className='slider-logo' />
+					<img src={LogoDark} className='slider-logo-collapsed' /> :
+					<img src={Banner} className='slider-logo' />
 			}
-			<Menu theme="dark" mode="inline" defaultSelectedKeys={['1']} >
+			<Menu theme="light" mode="inline" defaultSelectedKeys={['1']} >
 				<Menu.Item key="1" icon={<UnorderedListOutlined />} onClick={() => {
 					setContent(<ListaPrenotazioni />);
 				}}>
@@ -51,7 +52,9 @@ function AreaRiservata(){
 				}
 				{
 					role == 'amministratore_sistema' ? 
-						<Menu.Item key="5" icon={<LineChartOutlined />} onClick={() => {console.log('statistiche')}}>
+						<Menu.Item key="5" icon={<LineChartOutlined />} onClick={() => {
+							setContent(<CreaPresidio />);
+						}}>
 							Crea presidio
 						</Menu.Item>
 					: ''
@@ -59,11 +62,12 @@ function AreaRiservata(){
 			</Menu>
         </Sider>
 		<Layout>
-		<Content style={{padding: '100px', overflow: "scroll"}}>
-			{ContentComponent}
-		</Content>
-		<Footer style={{ textAlign: 'center' }}>Tamponi Italia ©2020 Created by SoftWar</Footer>
+			<Content style={{padding: '100px', overflow: "scroll"}}>
+				{ContentComponent}
+			</Content>
+			<Footer style={{ textAlign: 'center' }}>Tamponi Italia ©2020 Created by SoftWar Inc.</Footer>
 		</Layout>
+
 		</Layout>
 	);
 }
