@@ -10,7 +10,7 @@ async function getListaPrenotazioni (data) {
 
     if (data.id_presidio === undefined) query_data = '';
 
-    const response = await fetch("http://localhost/tamponi/prenotazioni/lista_prenotazioni.php" + query_data, {
+    const response = await fetch(process.env.REACT_APP_PERSONALE_LISTA_PRENOTAZIONI + query_data, {
         method: 'GET', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         headers: {
