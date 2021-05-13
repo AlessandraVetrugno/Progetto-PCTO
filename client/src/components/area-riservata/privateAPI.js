@@ -1,6 +1,7 @@
 export default {
 	getListaPrenotazioni,
-    getProvinceCascader
+    getProvinceCascader,
+    aggiungiPresidio
 };
 
 async function getListaPrenotazioni (data) {
@@ -59,5 +60,20 @@ function getProvinceCascader (callback) {
             });
         // chiamo la setState
         callback(options);
+    });  
+}
+
+async function aggiungiPresidio (id_provincia, nome) {
+    const data = {provincia: id_provincia, presidio: nome};
+
+    const response = await fetch(process.env.REACT_APP_AGGIUNGI_PRESIDIO, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
     });
+
+    return response.json();
 }
