@@ -21,7 +21,7 @@ if($ruolo == 'operatore_sanitario'){
     $stmt = $pdo->prepare($sql);
 }
 $psw_hashed = password_hash($password, PASSWORD_DEFAULT);
-$codice = strtoupper(uniqid());
+$codice = strtoupper(substr(uniqid(), 0,-2));
 
 // query di inserimento preparata
 
