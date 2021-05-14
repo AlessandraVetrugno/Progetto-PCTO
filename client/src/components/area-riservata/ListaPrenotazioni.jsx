@@ -1,10 +1,12 @@
 import React, {useState, useEffect} from "react";
-import { Table, Tag, Typography } from 'antd';
+import { Button, Table, Tag, Typography } from 'antd';
 import { UserOutlined, MinusCircleOutlined , CloseCircleOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import BannerLight from "../../assets/img/banner-light.png";
 import { useUser } from "../../AuthContext";
 import privateAPI from "./privateAPI";
 import "../../assets/styles/area-riservata.css";
+import Annulla from "../prenotazione/Annulla";
+import Esegui from "./Esegui";
 
 const { Text } = Typography;
 
@@ -56,24 +58,6 @@ function ListaPrenotazioni() {
             key: 'codice_fiscale',
         },
         {
-            title: 'Annullata',
-            dataIndex: 'annullato',
-            key: 'annullato',
-            render: annullato => {
-                if (parseInt(annullato))
-                    return <Tag icon={<MinusCircleOutlined />} color="warning">annullata</Tag>
-            }
-        },
-        {
-            title: 'Eseguita',
-            dataIndex: 'eseguito',
-            key: 'eseguito',
-            render: eseguito => {
-                if (parseInt(eseguito))
-                    return <Tag icon={<CheckCircleOutlined  />} color="success">eseguita</Tag>
-            }
-        },
-        {
             title: 'Data',
             dataIndex: 'data',
             key: 'data',
@@ -82,24 +66,37 @@ function ListaPrenotazioni() {
             }
         },
         {
-            title: 'Altro',
-            dataIndex: 'altro',
-            key: 'altro',
-            render: tags => {
-                <>
-                {tags.map((tag, index) => {
-                    console.log(tag);
-                    if (tag = 'eseguito')
-                        return <Tag icon={<CheckCircleOutlined  />} color="success">eseguita</Tag>
-                    if (tag = 'annullato')
-                        return <Tag icon={<MinusCircleOutlined />} color="warning">annullata</Tag>
-
+            title: 'Annullata',
+            dataIndex: 'annullato',
+            key: 'annullato',
+            render: (annullato, record) => {
+                if (parseInt(annullato))
+                    return <Tag icon={<MinusCircleOutlined />} color="warning">annullata</Tag>
+                else {
                     return (
-                        <>{' ‏‏‎ '}</>
-                    );
-                })}
-                </>
+                        <Annulla prenotazione={{codice: record.codice}}/>
+                    )
+                }
             }
+        },
+        {
+            title: 'Eseguita',
+            dataIndex: 'eseguito',
+            key: 'eseguito',
+            render: (eseguito, record) => {
+                if (parseInt(eseguito))
+                    return <Tag icon={<CheckCircleOutlined  />} color="success">eseguita</Tag>
+                else {
+                    return (
+                        <Esegui prenotazione={{codice: record.codice}}/>
+                    )
+                }
+            }
+        },
+        {
+            title: 'Note',
+            dataIndex: 'note',
+            key: 'note',
         }
     ];
 

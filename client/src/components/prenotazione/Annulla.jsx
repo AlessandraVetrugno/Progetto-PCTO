@@ -12,7 +12,7 @@ function Annulla(props){
 				onClick={() => {
 					appear(true, 'annulla-check-window')
 				}}>
-				Annulla la prenotazione
+				Annulla
 			</Button>
 			<PopUp component={<AnnullaCheck prenotazione={props.prenotazione} />} style={{height: '400px', width: '600px'}}  />
 			{/* <AnnullaCheck prenotazione={props.prenotazione} /> */}

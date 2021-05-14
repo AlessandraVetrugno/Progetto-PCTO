@@ -8,10 +8,8 @@
     margin: 30px;
 }
 
-.ant-layout-sider-trigger {
+.ant-layout-sider-light .ant-layout-sider-trigger {
     width: 400px;
-    background: gray;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    background: #181A55;
+    color: white;
 }
