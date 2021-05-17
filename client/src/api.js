@@ -38,7 +38,13 @@ function getPresidi (callback) {
                                 label: presidio.nome
                             }
                         })
+
+                        if (options[i].children[j].children.length == 0)
+                            options[i].children.pop();
                     })
+
+                    if (options[i].children.length == 0)
+                        options.pop();
                 });
 
                 // chiamo la dispatch passata come callback
@@ -100,8 +106,8 @@ async function login (credenziali) {
     return response.json();
 }
 
-async function annullaPrenotazione(codice) {
-    const data = {codice_prenotazione: codice};
+async function annullaPrenotazione(codice, text) {
+    const data = {codice_prenotazione: codice, note: text};
 
     const response = await fetch(process.env.REACT_APP_PRENOTAZIONE_ANNULLA, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.

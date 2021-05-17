@@ -1,7 +1,9 @@
 export default {
 	getListaPrenotazioni,
     getProvinceCascader,
-    aggiungiPresidio
+    aggiungiPresidio,
+    aggiungiOperatore,
+    eseguiPrenotazione
 };
 
 async function getListaPrenotazioni (data) {
@@ -63,10 +65,41 @@ function getProvinceCascader (callback) {
     });  
 }
 
+async function eseguiPrenotazione(codice, note) {
+    console.log(codice, note);
+    const data = {codice: codice, note: note};
+
+    const response = await fetch(process.env.REACT_APP_ESEGUI, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+
+    return response.json();
+}
+
 async function aggiungiPresidio (id_provincia, nome) {
     const data = {provincia: id_provincia, presidio: nome};
 
     const response = await fetch(process.env.REACT_APP_AGGIUNGI_PRESIDIO, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: JSON.stringify(data) // body data type must match "Content-Type" header
+    });
+
+    return response.json();
+}
+
+async function aggiungiOperatore (id_presidio) {
+    const data = {presidio: id_presidio};
+
+    const response = await fetch(process.env.REACT_APP_AGGIUNGI_OPERATORE, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
         headers: {

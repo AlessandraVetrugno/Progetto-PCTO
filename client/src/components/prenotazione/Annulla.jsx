@@ -27,7 +27,7 @@ function AnnullaCheck(props){
 
 	return (
 		<div className='annulla-check-window window'>
-			Sei sicuro di voler annullare la tua prenotazione?
+			Sei sicuro di voler annullare la prenotazione?
 			<div className="annulla-check-button-bar">
 				<Button danger type="primary" size={"large"}
 					onClick={()=>{

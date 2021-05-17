@@ -13,3 +13,26 @@
     background: #181A55;
     color: white;
 }
+
+.ant-popover-inner-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.btn-annulla, .btn-esegui {
+    font-weight: bold;
+}
+
+.btn-annulla {
+    color: red;
+}
+
+.btn-esegui {
+    color: green;
+}
+
+.btn-annulla:hover, .btn-esegui:hover {
+    transform: scale(1.05);
+    background: #E6F7FF;
+}

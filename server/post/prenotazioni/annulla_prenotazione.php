@@ -10,13 +10,18 @@ $dati = json_decode($dati, true);
 
 // variabili valorizzate tramite POST
 $codice_prenotazione = $dati['codice_prenotazione'];
+$note = $dati['note'];
 
 $sql = 'UPDATE prenotazione 
-        SET prenotazione.annullato = true
-        WHERE prenotazione.codice = :codice';
+        SET prenotazione.annullato = true, note = :note
+        WHERE prenotazione.codice = :codice
+        AND prenotazione.eseguito = false';
 
 $stmt = $pdo->prepare($sql);
-$stmt->execute(['codice'=>$codice_prenotazione]);
+$stmt->execute([
+    'codice'=>$codice_prenotazione,
+    'note'=>$note
+    ]);
 
 $sql = 'SELECT * FROM prenotazione WHERE codice = :codice AND prenotazione.annullato = true';
 $pren = $pdo->prepare($sql);
