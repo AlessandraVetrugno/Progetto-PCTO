@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Form, Cascader, Input, Tooltip, Button, Descriptions, Typography, message } from 'antd';
+import { Form, Cascader, Input, Tooltip, Button, Card, Typography, message } from 'antd';
 import { HomeOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import privateAPI from "./privateAPI";
 import "../../assets/styles/area-riservata.css";
@@ -97,9 +97,10 @@ function DatiAmministratorePresidio({...props}) {
     }, []);
 
     return (
-        <Descriptions title="Credenziali dell'amministratore del nuovo presidio">
-            <Descriptions.Item label="codice identificativo"><Paragraph copyable>{props?.data.codice}</Paragraph></Descriptions.Item>
-            <Descriptions.Item label="password"><Paragraph copyable>{props?.data.password}</Paragraph></Descriptions.Item>
-        </Descriptions>
+        <Card title={'Amministratore ' + props?.data.codice} >
+            <Form.Item label="Password" >
+                <Input.Password value={props?.data.password} style={{ width: 200 }} />
+            </Form.Item>
+        </Card>
     )
 }

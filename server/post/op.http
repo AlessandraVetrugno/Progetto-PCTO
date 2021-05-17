@@ -1,0 +1,8 @@
+POST http://localhost:80/tamponi/post/operatore_sanitario.php
+Content-Type: application/json
+
+{
+"presidio": 1
+}
+
+###
